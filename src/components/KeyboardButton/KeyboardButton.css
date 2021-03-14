@@ -1,0 +1,52 @@
+.KeyboardButton {
+    display: block;
+    color: #fff;
+    font-size: 40px;
+    border: none;
+    outline: none;
+    max-width: 90px;
+    max-height: 90px;
+    background-color: #336666;
+    cursor: pointer;
+}
+
+.KeyboardButton:last-child {
+    background-color: deepskyblue;
+}
+
+.KeyboardButton:nth-child(1) {
+    color: deepskyblue;
+}
+
+.KeyboardButton:nth-child(2) {
+    color: deepskyblue;
+}
+.KeyboardButton:nth-child(3) {
+    color: deepskyblue;
+}
+
+.KeyboardButton:nth-child(4) {
+    color: deepskyblue;
+}
+
+.KeyboardButton:nth-child(8) {
+    color: deepskyblue;
+}
+
+.KeyboardButton:nth-child(12) {
+    color: deepskyblue;
+}
+
+.KeyboardButton:nth-child(16) {
+    color: deepskyblue;
+}
+
+.KeyboardButton:hover {
+    background-color: #009999;
+    opacity: .5;
+    transition: all .2s ease-in;
+}
+
+.KeyboardButton:focus {
+    opacity: 1;
+}

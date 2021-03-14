@@ -1,0 +1,23 @@
+.InputField {
+    display: block;
+    margin-left: 65px;
+    margin-top: 10px;
+    margin-right: 15px;
+    color: deepskyblue;
+    width: 230px;
+    height: 35px;
+}
+
+.input {
+    width: 280px;
+    height: 33px;
+    font-size: 32px;
+    outline: none;
+    border: none;
+    text-align: right;
+    cursor: pointer;
+    color: deepskyblue;
+    caret-color: #fff;
+    overflow: hidden;
+}
+

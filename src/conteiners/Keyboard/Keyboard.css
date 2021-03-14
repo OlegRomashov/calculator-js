@@ -1,0 +1,9 @@
+.Keyboard {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+    gap: 0px 0px;
+    background-color: #336666;
+    height: 450px;
+}
+

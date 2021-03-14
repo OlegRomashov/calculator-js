@@ -1,0 +1,7 @@
+.Scoreboard {
+    display: block;
+    height: 130px;
+    width: 360px;
+    padding-top: 10px;
+    background-color: #003366;
+}

@@ -1,0 +1,23 @@
+.Converter {
+    display: block;
+    position: absolute;
+    left: 452px;
+    bottom: 19px;
+    width: 360px;
+    height: 360px;
+    color: #fff;
+    background-color: #336666;
+    z-index: 100;
+}
+
+.Converter h3 {
+    display: block;
+    margin: 38px 0 60px 15px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 0px 0px;
+}

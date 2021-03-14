@@ -1,0 +1,11 @@
+.Layout {
+    display: flex;
+    height: 100vh;
+    padding-top: 15px;
+    background-color: #bebebe;
+
+}
+
+.Layout main {
+    flex-grow: 1;
+}

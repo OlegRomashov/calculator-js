@@ -1,0 +1,14 @@
+.MeasurePanel{
+    display: flex;
+    justify-content: space-between;
+    height: 40px;
+    background-color: #0b164f;
+    color: deepskyblue;
+}
+
+.MeasurePanel i{
+    margin: 10px 15px;
+}
+.MeasurePanel i:last-child{
+    color: #fff;
+}

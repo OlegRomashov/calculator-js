@@ -1,0 +1,19 @@
+.MeasureKeyboard {
+    height: 360px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    gap: 0px 0px;
+}
+
+.right {
+    height: 360px;
+    vertical-align: middle;
+    background-color: #336666;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1.5fr 1.5fr;
+    gap: 0px 0px;
+    grid-area: 1 / 4 / 5 / 5;
+}
+

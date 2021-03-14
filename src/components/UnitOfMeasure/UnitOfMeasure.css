@@ -1,0 +1,28 @@
+.UnitOfMeasure {
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    text-align: center;
+    font-size: 40px;
+    border: none;
+    outline: none;
+    max-width: 120px;
+    height: 120px;
+    cursor: pointer;
+}
+
+.UnitOfMeasure span {
+    font-size: 15px;
+}
+.UnitOfMeasure .fas .far{
+    padding-top: 15px;
+}
+.UnitOfMeasure:hover {
+    background-color: #009999;
+    opacity: .5;
+    transition: all .2s ease-in;
+}
+
+.UnitOfMeasure:active {
+    opacity: 1;
+}

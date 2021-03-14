@@ -1,0 +1,35 @@
+.MeasureButton {
+    display: block;
+    color: #fff;
+    font-size: 40px;
+    text-align: center;
+    padding-top: 10px;
+    border: none;
+    outline: none;
+    max-width: 110px;
+    max-height: 110px;
+    background-color: #336666;
+    cursor: pointer;
+}
+
+.MeasureButton .fas {
+    vertical-align: middle;
+}
+
+.MeasureButton:hover {
+    background-color: #009999;
+    opacity: .5;
+    transition: all .2s ease-in;
+}
+
+.MeasureButton:focus {
+    opacity: 1;
+}
+
+.MeasureButton:nth-child(10) {
+    opacity: .1;
+}
+
+.MeasureButton:nth-child(10):hover {
+    opacity: .1;
+}

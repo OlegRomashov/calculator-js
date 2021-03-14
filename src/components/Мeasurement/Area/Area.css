@@ -1,0 +1,28 @@
+.Area{
+    position: fixed;
+    top: 15px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    left: 452px;
+    bottom: 20px;
+    width: 360px;
+    height: 602px;
+    padding-top: 20px;
+    background-color: #003366;
+}
+
+.title {
+    height: 30px;
+    color: #fde404;
+}
+
+.title span{
+    margin: 15px 15px;
+}
+
+.title span i{
+    height: 30px;
+    color: #fde404;
+}
+
