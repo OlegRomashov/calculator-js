@@ -6,7 +6,7 @@ const InputField = props => {
     return(
         <div className={"InputField"}>
             <input
-                value={props.inputField}
+                defaultValue={props.inputField}
             />
         </div>)}
 

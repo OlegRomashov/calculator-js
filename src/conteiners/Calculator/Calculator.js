@@ -84,22 +84,24 @@ class Calculator extends Component {
             case 7:
             case 8:
             case 9:
+            case '+':
                 field.push(id)
+                const input = field.join('')
                 const res = field.join('')
                 console.log(typeof res)
                 this.setState({
-                    inputField: field,
+                    inputField: input,
                     resultField: res
                 })
                 break
-            case 10:
+            // case 10:
                 // field.push('+')
                 //  const res2 = eval(field.join(''))
                 // this.setState({
                 //     inputField: field,
                 //     resultField: res2
                 // })
-                break
+                // break
             case 'C':
                 this.setState({
                     inputField: [],
