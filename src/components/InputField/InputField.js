@@ -5,10 +5,9 @@ const InputField = props => {
 
     return(
         <div className={"InputField"}>
-            <div
-                id='input'
-                className='input'
-            >{props.inputField}</div>
+            <input
+                value={props.inputField}
+            />
         </div>)}
 
 export default InputField
