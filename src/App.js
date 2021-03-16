@@ -12,8 +12,8 @@ class App extends Component {
         return (
             <Layout>
                 <Switch>
-                    <Route path="/area" component={Area}/>
-                    <Route path="/converter" component={Converter}/>
+                    <Route path="/converter/:id" component={Area}/>
+                    <Route path="/converter" exact component={Converter}/>
                     {/*<Route path="/temperature" component={Calculator}/>*/}
                     {/*<Route path="/volume" component={Calculator}/>*/}
                     {/*<Route path="/data" component={Calculator}/>*/}

@@ -17,4 +17,5 @@
     text-align: right;
     cursor: pointer;
     caret-color: #fff;
+    overflow: hidden;
 }

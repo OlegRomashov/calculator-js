@@ -11,6 +11,9 @@ class Calculator extends Component {
     state = {
         inputField: [],
         resultField: null,
+        operation: null,
+        prevNumber: null,
+        prevOperation: null,
         openLogDrawer: false,
         openConverterDrawer: false,
         cases: [
@@ -71,46 +74,68 @@ class Calculator extends Component {
         })
     }
 
-    onKeyboardHandler = id => {
-        const field = [...this.state.inputField]
-        switch (id) {
-            case 0:
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-            case 5:
-            case 6:
-            case 7:
-            case 8:
-            case 9:
-            case '+':
-                field.push(id)
-                const input = field.join('')
-                const res = field.join('')
-                console.log(typeof res)
+    onKeyboardHandler = (id, text) => {
+        const inputField = [...this.state.inputField]
+        const {operation, prevNumber, prevOperation} = this.state
+
+        if(id >= 0 && id <10) {
+            inputField.push(id)
+            if(!operation && !prevOperation) {
+                const input = inputField.join('')
+                const res = parseInt(inputField.join('')) + parseInt(prevNumber)
                 this.setState({
                     inputField: input,
                     resultField: res
                 })
-                break
-            // case 10:
-                // field.push('+')
-                //  const res2 = eval(field.join(''))
-                // this.setState({
-                //     inputField: field,
-                //     resultField: res2
-                // })
-                // break
-            case 'C':
+            } else {
+                const input = inputField.join('')
+                const res = input
+                console.log(res)
                 this.setState({
-                    inputField: [],
-                    resultField: []
+                    inputField: input,
+                    resultField: res
                 })
-                break
+            }
 
-            default:
-                console.log("Sorry")
+        }  else if (id > 9 && id < 14 ){
+            inputField.push(text)
+            const input = inputField.join('')
+            console.log(input)
+            if(prevOperation) {
+
+                this.setState({
+                    operation: text,
+                    prevOperation: text,
+                    prevNumber: null,
+                    inputField: input
+                })
+            } else {
+                this.setState({
+                    operation: text,
+                    prevOperation: null,
+                    prevNumber: input,
+                    inputField: input
+                })
+            }
+
+        } else if(id === 'C') {
+            this.setState({
+                inputField: [],
+                resultField: []
+            })
+        } else if (id === '()'){
+
+        } else if (id === '%'){
+
+        } else if (id === '+/-'){
+
+        } else if (id === ','){
+
+        } else if (id === '='){
+            this.setState({
+                operation: text,
+                previous: null
+            })
         }
     }
 
@@ -118,6 +143,10 @@ class Calculator extends Component {
         this.setState({
             openConverterDrawer: false
         })
+    }
+
+    componentDidMount() {
+        console.log(this.props.match.params.id)
     }
 
     render() {
