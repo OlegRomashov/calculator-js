@@ -10,7 +10,7 @@ import Converter from '../Converter/Converter'
 class Calculator extends Component {
     state = {
         inputField: [],
-        resultField: null,
+        resultField: [],
         operation: null,
         prevNumber: null,
         prevOperation: null,
@@ -74,69 +74,15 @@ class Calculator extends Component {
         })
     }
 
-    onKeyboardHandler = (id, text) => {
+    onKeyboardHandler = (id) => {
         const inputField = [...this.state.inputField]
-        const {operation, prevNumber, prevOperation} = this.state
-
-        if(id >= 0 && id <10) {
-            inputField.push(id)
-            if(!operation && !prevOperation) {
-                const input = inputField.join('')
-                const res = parseInt(inputField.join('')) + parseInt(prevNumber)
-                this.setState({
-                    inputField: input,
-                    resultField: res
-                })
-            } else {
-                const input = inputField.join('')
-                const res = input
-                console.log(res)
-                this.setState({
-                    inputField: input,
-                    resultField: res
-                })
-            }
-
-        }  else if (id > 9 && id < 14 ){
-            inputField.push(text)
-            const input = inputField.join('')
-            console.log(input)
-            if(prevOperation) {
-
-                this.setState({
-                    operation: text,
-                    prevOperation: text,
-                    prevNumber: null,
-                    inputField: input
-                })
-            } else {
-                this.setState({
-                    operation: text,
-                    prevOperation: null,
-                    prevNumber: input,
-                    inputField: input
-                })
-            }
-
-        } else if(id === 'C') {
-            this.setState({
-                inputField: [],
-                resultField: []
-            })
-        } else if (id === '()'){
-
-        } else if (id === '%'){
-
-        } else if (id === '+/-'){
-
-        } else if (id === ','){
-
-        } else if (id === '='){
-            this.setState({
-                operation: text,
-                previous: null
-            })
-        }
+        inputField.push(id)
+        const input = inputField.join('')
+        const res = input
+        this.setState({
+            inputField: input,
+            resultField: res
+        })
     }
 
     onBackDropHandler = () => {
@@ -145,8 +91,13 @@ class Calculator extends Component {
         })
     }
 
-    componentDidMount() {
-        console.log(this.props)
+    onChangeInput = (event) => {
+        const value = event.target.value
+        const res = [...value]
+        this.setState({
+            inputField: value,
+            resultField: res
+        })
     }
 
     render() {
@@ -155,6 +106,7 @@ class Calculator extends Component {
                 <Scoreboard
                     inputField={this.state.inputField}
                     resultField={this.state.resultField}
+                    onChangeInput={event => this.onChangeInput(event)}
                 />
                 <Pane
                     onClickDrawer={this.onClickDrawer}

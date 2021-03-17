@@ -7,6 +7,7 @@ const Scoreboard = props => (
             <div className={'Scoreboard'}>
                 <InputField
                     inputField={props.inputField}
+                    onChangeInput={props.onChangeInput}
                 />
                 <ResultField
                     resultField={props.resultField}

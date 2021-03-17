@@ -6,7 +6,9 @@ const InputField = props => {
     return(
         <div className={"InputField"}>
             <input
-                defaultValue={props.inputField}
+                type='text'
+                value={props.inputField}
+                onChange={props.onChangeInput}
             />
         </div>)}
 

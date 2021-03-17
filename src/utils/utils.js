@@ -6,7 +6,7 @@ function calculate(id, text) {
         inputField.push(id)
         if(!operation && !prevOperation) {
             const input = inputField.join('')
-            const res = eval(inputField.join(''))+prevNumber
+            const res = parseInt(inputField.join('')) + parseInt(prevNumber)
             this.setState({
                 inputField: input,
                 resultField: res
@@ -30,7 +30,7 @@ function calculate(id, text) {
             this.setState({
                 operation: text,
                 prevOperation: text,
-                prevNumber: input,
+                prevNumber: null,
                 inputField: input
             })
         } else {
