@@ -92,12 +92,16 @@ class Calculator extends Component {
     }
 
     onChangeInput = (event) => {
+        const symbols = ['(', ')', '%', '/', '7', '8', '9', '*', '4', '5', '6', '-', '1', '2', '3', '+', '0', ',', '=']
         const value = event.target.value
-        const res = [...value]
-        this.setState({
-            inputField: value,
-            resultField: res
-        })
+        const last = value[value.length-1]
+        if(symbols.includes(last)) {
+            const res = [...value]
+            this.setState({
+                inputField: value,
+                resultField: res
+            })
+        }
     }
 
     render() {
