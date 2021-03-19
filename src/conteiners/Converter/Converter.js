@@ -38,7 +38,7 @@ const Converter = props => {
             <NavLink to={'/'}>
                 {/*todo: попробовать сделать ссылку-возврат через useHistory*/}
                 <BackDrop
-                    onCloseBackDrop={() => props.onCloseBackDrop}
+                    onCloseBackDrop={props.onCloseBackDrop}
                 />
             </NavLink>
         </React.Fragment>
