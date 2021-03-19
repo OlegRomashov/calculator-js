@@ -1,4 +1,4 @@
-function calculate(id, text) {
+function calcul(id, text) {
     const inputField = [...this.state.inputField]
     const {operation, prevNumber, prevOperation} = this.state
 
@@ -63,7 +63,7 @@ function calculate(id, text) {
     }
 }
 
-export default calculate
+export default calcul
 
 
 

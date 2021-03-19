@@ -5,7 +5,7 @@ import Keybord from '../Keyboard/Keyboard'
 import Pane from '../Pane/Pane'
 import Log from '../Log/Log'
 import Converter from '../Converter/Converter'
-// import calculate from '../../utils/utils'
+// import calculate from '../../utils/calculate'
 
 class Calculator extends Component {
     state = {
@@ -36,9 +36,9 @@ class Calculator extends Component {
     }
 
     onClickDrawer = id => {
-        if(id === 1 ) {
+        if(id === '1' ) {
             this.onLogDrawerHandler()
-        } else if (id === 2) {
+        } else if (id === '2') {
             this.onConverterDrawerHandler()
         } else {this.onDeletSymbolHandler()}
     }
@@ -74,6 +74,12 @@ class Calculator extends Component {
         })
     }
 
+    onBackDropHandler = () => {
+        this.setState({
+            openConverterDrawer: false
+        })
+    }
+
     onKeyboardHandler = (id) => {
         const inputField = [...this.state.inputField]
         inputField.push(id)
@@ -85,17 +91,11 @@ class Calculator extends Component {
         })
     }
 
-    onBackDropHandler = () => {
-        this.setState({
-            openConverterDrawer: false
-        })
-    }
-
     onChangeInput = (event) => {
         const symbols = ['(', ')', '%', '/', '7', '8', '9', '*', '4', '5', '6', '-', '1', '2', '3', '+', '0', ',', '=']
         const value = event.target.value
-        const last = value[value.length-1]
-        if(symbols.includes(last)) {
+        const symbol = value[value.length-1]
+        if(symbols.includes(symbol)) {
             const res = [...value]
             this.setState({
                 inputField: value,
@@ -114,6 +114,7 @@ class Calculator extends Component {
                 />
                 <Pane
                     onClickDrawer={this.onClickDrawer}
+                    casesLength={this.state.cases.length}
                 />
                 {this.state.openLogDrawer
                     ? <Log

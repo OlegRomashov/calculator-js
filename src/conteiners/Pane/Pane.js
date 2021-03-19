@@ -3,22 +3,22 @@ import PanelButton from "../../components/PanelButton/PanelButton"
 import './Pane.css'
 
 const Pane = props => {
-
-    const buttons = [{id: 1, icon: 'ЖУРНАЛ'},
-        {id: 2, icon: <i className="fas fa-ruler"></i>},
-        {id: 3, icon: <i className="fas fa-backspace"></i>}]
-
     return (
         <div className={'Pane'}>
-            {buttons.map((button, index) => {
-                return (
-                    <PanelButton
-                        key={index}
-                        button={button}
-                        onClickDrawer={props.onClickDrawer}
-                    />
-                )
-            })}
+            <PanelButton
+                id={'1'}
+                onClickDrawer={props.onClickDrawer}
+                disabled={!props.casesLength}
+            >ЖУРНАЛ</PanelButton>
+            <PanelButton
+                id={'2'}
+                onClickDrawer={props.onClickDrawer}
+            ><i className="fas fa-ruler"></i></PanelButton>
+            <PanelButton />
+            <PanelButton
+                id={'3'}
+                onClickDrawer={props.onClickDrawer}
+            ><i className="fas fa-backspace"></i></PanelButton>
         </div>
     )
 }
