@@ -3,10 +3,13 @@ import './PanelButton.css'
 
 const PanelButton = props => {
         return(
-            <button className={'PanelButton'}
-                    onClick={() => props.onClickDrawer(props.button.id)}
+            <button
+                    id={props.id}
+                    className={'PanelButton'}
+                    onClick={() => props.onClickDrawer(props.id)}
+                    disabled={props.disabled}
             >
-                    {props.button.icon}
+                    {props.children}
             </button>
         )
 }
