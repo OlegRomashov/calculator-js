@@ -11,7 +11,13 @@ class Area extends Component {
         cursor: 'up'
     }
 
-    onChangeMeasureInput(){}
+    changeMeasureInputHandler(){}
+
+
+
+    changeSelectHandler(){
+
+    }
 
     render() {
         return (
@@ -21,7 +27,8 @@ class Area extends Component {
                     КОНВЕРТАЦИЯ ЕДИНИЦ
                 </div>
                 <MeasureBlock
-                    onChangeMeasureInput={this.onChangeMeasureInput}
+                    onChangeMeasureInput={this.changeMeasureInputHandler}
+                    onChangeSelect={this.changeSelectHandler}
                 />
                 <MeasureBlock
                     onChangeMeasureInput={this.onChangeMeasureInput}

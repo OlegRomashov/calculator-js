@@ -3,4 +3,16 @@
     height: 15px;
     margin-top: 5px;
     margin-left: 10px;
+
+}
+
+select {
+    background-color: #0b164f;
+    color: deepskyblue;
+    border: none;
+    outline: none;
+}
+
+select:focus {
+    border-color: deepskyblue;
 }

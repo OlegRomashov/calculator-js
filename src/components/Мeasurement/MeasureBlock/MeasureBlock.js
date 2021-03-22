@@ -3,14 +3,18 @@ import './MeasureBlock.css'
 import MeasureInput from '../MeasureInput/MeasureInput'
 import MeasureSelect from '../MeasureSelect/MeasureSelect'
 
-const MeasureBlock = props => (
+const MeasureBlock = props => {
+
+    return (
     <div className="MeasureBlock">
 
-        <MeasureSelect />
+        <MeasureSelect
+            selectionHandler={props.onChangeSelect}
+        />
         <MeasureInput
             onChangeMeasureInput={props.onChangeMeasureInput}
         />
     </div>
-)
+)}
 
 export default MeasureBlock
