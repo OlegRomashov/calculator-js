@@ -7,12 +7,12 @@
     border: none;
     outline: none;
     max-width: 110px;
-    max-height: 110px;
+    max-height: 131px;
     background-color: #336666;
     cursor: pointer;
 }
 
-.MeasureButton .fas {
+i.fas {
     vertical-align: middle;
 }
 

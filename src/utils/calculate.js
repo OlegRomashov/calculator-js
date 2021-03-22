@@ -1,4 +1,4 @@
-function calculate(arr, id) {
+export function calculate(arr, id) {
     const inputField = [...arr]
     inputField.push(id)
     const input = inputField.join('')
@@ -9,4 +9,3 @@ function calculate(arr, id) {
     })
 }
 
-export default calculate

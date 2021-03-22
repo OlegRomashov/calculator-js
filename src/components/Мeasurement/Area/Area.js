@@ -7,8 +7,11 @@ import './Area.css'
 
 class Area extends Component {
     state = {
-        counter: null
+        counter: null,
+        cursor: 'up'
     }
+
+    onChangeMeasureInput(){}
 
     render() {
         return (
@@ -17,8 +20,12 @@ class Area extends Component {
                     <NavLink to='/'><span><i className="fas fa-chevron-left"></i></span></NavLink>
                     КОНВЕРТАЦИЯ ЕДИНИЦ
                 </div>
-                <MeasureBlock/>
-                <MeasureBlock/>
+                <MeasureBlock
+                    onChangeMeasureInput={this.onChangeMeasureInput}
+                />
+                <MeasureBlock
+                    onChangeMeasureInput={this.onChangeMeasureInput}
+                />
                 <MeasurePanel/>
                 <MeasureKeyboard/>
             </div>

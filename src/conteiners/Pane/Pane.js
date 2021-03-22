@@ -6,17 +6,17 @@ const Pane = props => {
     return (
         <div className={'Pane'}>
             <PanelButton
-                id={'1'}
+                id={1}
                 onClickDrawer={props.onClickDrawer}
                 disabled={!props.casesLength}
             >ЖУРНАЛ</PanelButton>
             <PanelButton
-                id={'2'}
+                id={2}
                 onClickDrawer={props.onClickDrawer}
             ><i className="fas fa-ruler"></i></PanelButton>
             <PanelButton />
             <PanelButton
-                id={'3'}
+                id={3}
                 onClickDrawer={props.onClickDrawer}
             ><i className="fas fa-backspace"></i></PanelButton>
         </div>

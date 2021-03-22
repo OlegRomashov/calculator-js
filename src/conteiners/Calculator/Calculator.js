@@ -5,7 +5,7 @@ import Keybord from '../Keyboard/Keyboard'
 import Pane from '../Pane/Pane'
 import Log from '../Log/Log'
 import Converter from '../Converter/Converter'
-// import calculate from '../../utils/calculate'
+// import {calculate} from '../../utils/calculate'
 
 class Calculator extends Component {
     state = {
@@ -36,9 +36,9 @@ class Calculator extends Component {
     }
 
     onClickDrawer = id => {
-        if(id === '1' ) {
+        if(id === 1 ) {
             this.onLogDrawerHandler()
-        } else if (id === '2') {
+        } else if (id === 2) {
             this.onConverterDrawerHandler()
         } else {this.onDeletSymbolHandler()}
     }
@@ -57,14 +57,13 @@ class Calculator extends Component {
     }
 
     onDeletSymbolHandler = () => {
-        if(this.state.inputField.length === 0) {
-            return
+        if(this.state.inputField.length !== 0) {
+            const field = [...this.state.inputField]
+            field.splice(-1, 1)
+            this.setState({
+                inputField: field
+            })
         }
-        const field = [...this.state.inputField]
-        field.splice(-1, 1)
-        this.setState({
-            inputField: field
-        })
     }
 
     onLogClearHandler = () => {
@@ -96,7 +95,7 @@ class Calculator extends Component {
         const value = event.target.value
         const symbol = value[value.length-1]
         if(symbols.includes(symbol)) {
-            const res = [...value]
+            const res = value
             this.setState({
                 inputField: value,
                 resultField: res

@@ -1,5 +1,5 @@
 .MeasureKeyboard {
-    height: 360px;
+    height: 350px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr 1fr;
@@ -7,7 +7,7 @@
 }
 
 .right {
-    height: 360px;
+    height: 350px;
     vertical-align: middle;
     background-color: #336666;
     display: grid;

@@ -1,0 +1,16 @@
+.MeasureInput {
+    display: block;
+    margin-top: 30px;
+}
+
+.MeasureInput input {
+    width: 310px;
+    height: 20px;
+    color: deepskyblue;
+    caret-color: #fff;
+    margin-right: 10px;
+    text-align: right;
+    outline: none;
+    border: none;
+    background-color: #0b164f;
+}
