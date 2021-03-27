@@ -9,8 +9,8 @@ import Converter from '../Converter/Converter'
 
 class Calculator extends Component {
     state = {
-        inputField: [],
-        resultField: [],
+        inputField: '',
+        resultField: '',
         operation: null,
         prevNumber: null,
         prevOperation: null,
@@ -40,7 +40,7 @@ class Calculator extends Component {
             this.onLogDrawerHandler()
         } else if (id === 2) {
             this.onConverterDrawerHandler()
-        } else {this.onDeletSymbolHandler()}
+        } else {this.onDeleteSymbolHandler()}
     }
 
     onLogDrawerHandler = () => {
@@ -56,12 +56,14 @@ class Calculator extends Component {
         })
     }
 
-    onDeletSymbolHandler = () => {
+    onDeleteSymbolHandler = () => {
         if(this.state.inputField.length !== 0) {
             const field = [...this.state.inputField]
             field.splice(-1, 1)
+            const res = field
             this.setState({
-                inputField: field
+                inputField: field,
+                resultField: res
             })
         }
     }

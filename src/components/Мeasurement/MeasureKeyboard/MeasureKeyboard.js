@@ -19,6 +19,7 @@ const MeasureKeyboard = props => (
                 <MeasureButton
                     key={index}
                     button={button}
+                    onKeyboardClick={props.onKeyboardClick}
                     />
             )
         })}
@@ -28,6 +29,7 @@ const MeasureKeyboard = props => (
                         <MeasureButton
                             key={index}
                             button={button}
+                            onKeyboardClick={props.onKeyboardClick}
                         />
                     )
                 })}

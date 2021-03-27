@@ -5,6 +5,7 @@ const MeasureInput = props => (
     <div className='MeasureInput'>
         <input
             type="text"
+            value={props.inputFieldUP}
             onChange={props.onChangeMeasureInput}
             defaultValue='1'
         />

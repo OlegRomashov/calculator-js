@@ -7,10 +7,16 @@ import './Area.css'
 
 class Area extends Component {
     state = {
-        counter: null,
-        cursor: 'up'
+        inputFieldUP: '5',
+        inputFieldDown: '',
+        block: 'up'
     }
 
+    onKeyboardHandler = (id) => {
+        console.log(id)
+    }
+    onChangeInput = (event) => {}
+    onDeleteSymbolHandler
     changeMeasureInputHandler(){}
 
 
@@ -27,14 +33,20 @@ class Area extends Component {
                     КОНВЕРТАЦИЯ ЕДИНИЦ
                 </div>
                 <MeasureBlock
+                    block={this.state.block}
+                    inputFieldUP={this.state.inputFieldUP}
                     onChangeMeasureInput={this.changeMeasureInputHandler}
                     onChangeSelect={this.changeSelectHandler}
                 />
                 <MeasureBlock
+                    block={this.state.block}
+                    inputFieldDown={this.state.inputFieldDown}
                     onChangeMeasureInput={this.onChangeMeasureInput}
                 />
                 <MeasurePanel/>
-                <MeasureKeyboard/>
+                <MeasureKeyboard
+                    onKeyboardClick = {this.onKeyboardHandler}
+                />
             </div>
         )
     }

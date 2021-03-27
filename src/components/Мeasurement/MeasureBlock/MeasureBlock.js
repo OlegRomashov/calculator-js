@@ -12,6 +12,8 @@ const MeasureBlock = props => {
             selectionHandler={props.onChangeSelect}
         />
         <MeasureInput
+            inputFieldUP={props.inputFieldUP}
+            inputFieldDown={props.inputFieldDown}
             onChangeMeasureInput={props.onChangeMeasureInput}
         />
     </div>
