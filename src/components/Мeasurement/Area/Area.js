@@ -12,15 +12,28 @@ class Area extends Component {
         block: 'up'
     }
 
-    onKeyboardHandler = (id) => {
-        const inputFieldUP = [...this.state.inputFieldUP]
-        inputFieldUP.push(id)
-        const inputUP = inputFieldUP.join('')
-        const inputDown = inputUP//todo calculate result
+    clearInput = () => {
         this.setState({
-            inputFieldUP: inputUP,
-            inputFieldDown: inputDown
+            inputFieldUP: '',
+            inputFieldDown: ''
         })
+    }
+
+    onKeyboardHandler = (id) => {
+        if( id === 1) {
+            this.clearInput()
+        } else if(id === 10) {
+            return
+        } else {
+            const inputFieldUP = [...this.state.inputFieldUP]
+            inputFieldUP.push(id)
+            const inputUP = inputFieldUP.join('')
+            const inputDown = inputUP//todo calculate result
+            this.setState({
+                inputFieldUP: inputUP,
+                inputFieldDown: inputDown
+            })
+        }
     }
 
     onDeleteSymbolHandler = () => {

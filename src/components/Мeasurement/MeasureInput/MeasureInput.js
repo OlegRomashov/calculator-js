@@ -7,7 +7,7 @@ const MeasureInput = props => (
             type="text"
             value={props.inputFieldUP}
             onChange={props.onChangeMeasureInput}
-            defaultValue='1'
+            // defaultValue='1'
         />
         <span>
             <span id="section2">

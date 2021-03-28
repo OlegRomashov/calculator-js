@@ -27,9 +27,14 @@ i.fas {
 }
 
 .MeasureButton:nth-child(10) {
-    opacity: .1;
+    opacity: .2;
 }
 
 .MeasureButton:nth-child(10):hover {
-    opacity: .1;
+    cursor: unset;
+    opacity: .2;
+}
+
+.MeasureButton:nth-child(10):focus {
+    opacity: .2;
 }
