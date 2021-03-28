@@ -13,12 +13,14 @@
 }
 
 .title {
+    display: flex;
+    justify-content: start;
     height: 30px;
     color: #fde404;
 }
 
 .title span{
-    margin: 15px 15px;
+    margin: 0 15px;
 }
 
 .title span i{

@@ -7,16 +7,36 @@ import './Area.css'
 
 class Area extends Component {
     state = {
-        inputFieldUP: '5',
+        inputFieldUP: '',
         inputFieldDown: '',
         block: 'up'
     }
 
     onKeyboardHandler = (id) => {
-        console.log(id)
+        const inputFieldUP = [...this.state.inputFieldUP]
+        inputFieldUP.push(id)
+        const inputUP = inputFieldUP.join('')
+        const inputDown = inputUP//todo calculate result
+        this.setState({
+            inputFieldUP: inputUP,
+            inputFieldDown: inputDown
+        })
+    }
+
+    onDeleteSymbolHandler = () => {
+        if(this.state.inputFieldUP.length !== 0) {
+            const fieldUP = [...this.state.inputFieldUP]
+            fieldUP.splice(-1, 1)
+            const inputFieldUP = fieldUP.join('')
+            const inputFieldDown = inputFieldUP//todo calculate result
+            this.setState({
+                inputFieldUP: inputFieldUP,
+                inputFieldDown: inputFieldDown
+            })
+        }
     }
     onChangeInput = (event) => {}
-    onDeleteSymbolHandler
+
     changeMeasureInputHandler(){}
 
 
@@ -43,7 +63,9 @@ class Area extends Component {
                     inputFieldDown={this.state.inputFieldDown}
                     onChangeMeasureInput={this.onChangeMeasureInput}
                 />
-                <MeasurePanel/>
+                <MeasurePanel
+                    onDeleteSymbol = {this.onDeleteSymbolHandler}
+                />
                 <MeasureKeyboard
                     onKeyboardClick = {this.onKeyboardHandler}
                 />

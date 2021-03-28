@@ -60,9 +60,10 @@ class Calculator extends Component {
         if(this.state.inputField.length !== 0) {
             const field = [...this.state.inputField]
             field.splice(-1, 1)
-            const res = field
+            const inputField = field.join('')
+            const res = inputField//todo calculate result
             this.setState({
-                inputField: field,
+                inputField: inputField,
                 resultField: res
             })
         }
@@ -85,7 +86,7 @@ class Calculator extends Component {
         const inputField = [...this.state.inputField]
         inputField.push(id)
         const input = inputField.join('')
-        const res = input
+        const res = input//todo calculate result
         this.setState({
             inputField: input,
             resultField: res

@@ -10,7 +10,9 @@ const MeasurePanel = props => (
             <i className='fas fa-square-full'></i>
         </NavLink>
 
-        <i className="fas fa-backspace"></i>
+        <i className="fas fa-backspace"
+            onClick={props.onDeleteSymbol}
+        ></i>
     </div>
 )
 
