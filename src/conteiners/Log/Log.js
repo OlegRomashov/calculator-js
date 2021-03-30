@@ -10,11 +10,13 @@ const Log = props => {
         <div className={'Example'}>
                     {props.cases.map((example, index) => {
                         return (
+                        <React.Fragment key={index}>
                             <Case
-                                key={index}
+                                index={index}
                                 example={example}
                                 onClickExample={props.onClickExample}
                             />
+                        </React.Fragment>
                         )
                     })}
         </div>

@@ -17,22 +17,25 @@ class Calculator extends Component {
         openLogDrawer: false,
         openConverterDrawer: false,
         cases: [
-            {id: 1, field: '75-56', equally: 19},
-            {id: 2, field: '24+34', equally: 57},
-            {id: 3, field: '44*2', equally: 88},
-            {id: 4, field: '75-56', equally: 19},
-            {id: 5, field: '24+34', equally: 57},
-            {id: 6, field: '44*2', equally: 88},
-            {id: 7, field: '44/11', equally: 4},
-            {id: 8, field: '75-56', equally: 19},
-            {id: 9, field: '24+34', equally: 57},
-            {id: 10, field: '44*2', equally: 88},
+            {field: '75-56', equally: 19},
+            {field: '24+34', equally: 57},
+            {field: '44*2', equally: 88},
+            {field: '75-56', equally: 19},
+            {field: '124+234', equally: 357},
+            {field: '44*2', equally: 88},
+            {field: '44/11', equally: 4},
+            {field: '75-56', equally: 19},
+            {field: '24+34', equally: 57},
+            {field: '44*2', equally: 88},
         ]
     }
 
-    onExampleHandler = id => {
-        const example = this.state.cases[id - 1]
-        console.log(example.equally)
+    onExampleHandler = index => {
+        const equally = this.state.cases[index].equally.toString()
+        this.setState({
+            inputField: equally,
+            resultField: ''
+        })
     }
 
     onClickDrawer = id => {
