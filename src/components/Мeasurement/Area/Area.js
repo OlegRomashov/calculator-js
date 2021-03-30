@@ -7,15 +7,18 @@ import './Area.css'
 
 class Area extends Component {
     state = {
-        inputFieldUP: '',
-        inputFieldDown: '',
-        block: 'up'
+        inputs: [
+            {name: 'inputFieldUP', value: '111'},
+            {name: 'inputFieldDown', value: '222'}
+        ]
     }
 
     clearInput = () => {
         this.setState({
-            inputFieldUP: '',
-            inputFieldDown: ''
+            inputs: [
+                {name: 'inputFieldUP', value: ''},
+                {name: 'inputFieldDown', value: ''}
+            ]
         })
     }
 
@@ -25,7 +28,7 @@ class Area extends Component {
         } else if(id === 10) {
             return
         } else {
-            const inputFieldUP = [...this.state.inputFieldUP]
+            const inputFieldUP = [...this.state.inputs.inputFieldUP.value]
             inputFieldUP.push(id)
             const inputUP = inputFieldUP.join('')
             const inputDown = inputUP//todo calculate result
@@ -50,32 +53,42 @@ class Area extends Component {
     }
     onChangeInput = (event) => {}
 
-    changeMeasureInputHandler(){}
-
-
-
-    changeSelectHandler(){
-
+    changeMeasureInputHandler = (index, event) => {
+        const symbols = [',', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+        const value = event.target.value
+        const symbol = value[value.length-1]
+        if(symbols.includes(symbol)) {
+            const input = this.state.inputs[index]
+            input.value = value
+            const inputs = [...this.state.inputs]
+            inputs[index] = input
+            this.setState({inputs})
+        }
+        console.log(this.state.inputs)
     }
 
+    changeSelectHandler(){}
+
     render() {
+        const inputs = this.state.inputs
         return (
             <div className='Area'>
                 <div className="title">
                     <NavLink to='/'><span><i className="fas fa-chevron-left"></i></span></NavLink>
                     КОНВЕРТАЦИЯ ЕДИНИЦ
                 </div>
-                <MeasureBlock
-                    block={this.state.block}
-                    inputFieldUP={this.state.inputFieldUP}
-                    onChangeMeasureInput={this.changeMeasureInputHandler}
-                    onChangeSelect={this.changeSelectHandler}
-                />
-                <MeasureBlock
-                    block={this.state.block}
-                    inputFieldDown={this.state.inputFieldDown}
-                    onChangeMeasureInput={this.onChangeMeasureInput}
-                />
+                {inputs.map((input, index) => {
+                    return (
+                        <React.Fragment key={index}>
+                            <MeasureBlock
+                                index={index}
+                                inputValue={input.value}
+                                onChangeMeasureInput={this.changeMeasureInputHandler}
+                                onChangeSelect={this.changeSelectHandler}
+                            />
+                        </React.Fragment>
+                    )
+                })}
                 <MeasurePanel
                     onDeleteSymbol = {this.onDeleteSymbolHandler}
                 />

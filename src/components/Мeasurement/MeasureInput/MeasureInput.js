@@ -1,15 +1,20 @@
-import React from 'react'
+import React, {Component} from 'react'
 import './MeasureInput.css'
 
-const MeasureInput = props => (
-    <div className='MeasureInput'>
-        <input
-            type="text"
-            value={props.inputFieldUP}
-            onChange={props.onChangeMeasureInput}
-            // defaultValue='1'
-        />
-        <span>
+class MeasureInput extends Component {
+
+    render() {
+        return(
+            <div className='MeasureInput'>
+                <input
+                    // ref={props.ref}
+                    type="text"
+                    value={this.props.inputValue}
+                    onChange={this.props.onChangeMeasureInput.bind(null, this.props.index)}
+                    // defaultValue='1'
+
+                />
+                <span>
             <span id="section2">
              ac
             </span>
@@ -32,7 +37,9 @@ const MeasureInput = props => (
                 m2
             </span>
         </span>
-    </div>
-)
+            </div>
+        )
+    }
+}
 
 export default MeasureInput

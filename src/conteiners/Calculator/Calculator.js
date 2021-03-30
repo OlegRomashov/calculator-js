@@ -11,9 +11,9 @@ class Calculator extends Component {
     state = {
         inputField: '',
         resultField: '',
-        operation: null,
-        prevNumber: null,
-        prevOperation: null,
+        // operation: null,
+        // prevNumber: null,
+        // prevOperation: null,
         openLogDrawer: false,
         openConverterDrawer: false,
         cases: [
@@ -141,4 +141,4 @@ class Calculator extends Component {
     }
 }
 
-export default Calculator;
+export default Calculator
