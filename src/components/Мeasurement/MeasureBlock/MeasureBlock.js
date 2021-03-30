@@ -12,7 +12,7 @@ class MeasureBlock extends Component{
 
     componentDidMount() {
         if (this.props.index === 1) {
-            // this.inputRef.current.focus()
+            // this.inputRef.current.focus().bind(this)
         }
     }
 
@@ -20,10 +20,11 @@ class MeasureBlock extends Component{
         return (
             <div className="MeasureBlock">
                 <MeasureSelect
+                    index={this.props.index}
                     selectionHandler={this.props.onChangeSelect}
                 />
                 <MeasureInput
-                    ref={this.inputRef}
+                    // ref={this.inputRef}
                     index={this.props.index}
                     inputValue={this.props.inputValue}
                     onChangeMeasureInput={this.props.onChangeMeasureInput}

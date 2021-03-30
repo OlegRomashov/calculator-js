@@ -1,15 +1,15 @@
 import React from 'react'
 import './MeasureSelect.css'
 
-const MeasureSelect = () => {
+const MeasureSelect = props => {
     const sections = {
-        'Acre': 'section2',
-        'Ar': 'section3',
-        'Hectare': 'section4',
-        'SquareCentimeter': 'section5',
-        'SquareFoot': 'section6',
-        'SquareInch': 'section7',
-        'SquareMeter': 'section8'
+        'Acre': 'section2'+ props.index,
+        'Ar': 'section3'+ props.index,
+        'Hectare': 'section4'+ props.index,
+        'SquareCentimeter': 'section5'+ props.index,
+        'SquareFoot': 'section6'+ props.index,
+        'SquareInch': 'section7'+ props.index,
+        'SquareMeter': 'section8'+ props.index
     }
 
     const selection = function (select) {

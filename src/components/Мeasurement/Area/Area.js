@@ -8,8 +8,8 @@ import './Area.css'
 class Area extends Component {
     state = {
         inputs: [
-            {name: 'inputFieldUP', value: '111'},
-            {name: 'inputFieldDown', value: '222'}
+            {name: 'inputFieldUP', value: '1'},
+            {name: 'inputFieldDown', value: '1'}
         ]
     }
 
