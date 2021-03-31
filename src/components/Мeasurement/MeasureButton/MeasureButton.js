@@ -4,7 +4,7 @@ import './MeasureButton.css'
 const MeasureButton = props => (
     <button
         className="MeasureButton"
-        onClick={() => props.onKeyboardClick(props.button.id, props.button.text)}
+        onClick={() => props.onKeyboardClick(props.button.id)}
     >
         {props.button.text}
     </button>

@@ -21,3 +21,16 @@
     border: none;
     background-color: #0b164f;
 }
+
+::-webkit-input-placeholder { /* WebKit browsers */
+    color:    #2C9EE4;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color:    #2C9EE4;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color:    #2C9EE4;
+}
+:-ms-input-placeholder { /* Internet Explorer 10+ */
+    color:    #2C9EE4;
+}

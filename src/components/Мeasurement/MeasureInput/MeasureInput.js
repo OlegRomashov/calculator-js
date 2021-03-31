@@ -12,6 +12,7 @@ class MeasureInput extends Component {
                     type="text"
                     value={this.props.inputValue}
                     onChange={this.props.onChangeMeasureInput.bind(null, this.props.index)}
+                    placeholder='1'
                 />
                 <span>
                     <span id={'section2'+this.props.index}>

@@ -8,10 +8,10 @@ import './Area.css'
 class Area extends Component {
     state = {
         inputs: [
-            {name: 'inputFieldUP', value: '1'},
-            {name: 'inputFieldDown', value: '1'}
+            {name: 'inputFieldUP', value: ''},
+            {name: 'inputFieldDown', value: ''}
         ],
-        block: 'up'
+        indexBlock: '1'
     }
 
     clearInput = () => {
@@ -24,33 +24,29 @@ class Area extends Component {
     }
 
     onKeyboardHandler = (id) => {
-        if( id === 1) {
+        const indexBlock = this.state.indexBlock
+
+        if( id === 12) {
             this.clearInput()
         } else if(id === 10) {
             return
         } else {
-            const inputFieldUP = [...this.state.inputs.inputFieldUP.value]
-            inputFieldUP.push(id)
-            const inputUP = inputFieldUP.join('')
-            const inputDown = inputUP//todo calculate result
-            this.setState({
-                inputFieldUP: inputUP,
-                inputFieldDown: inputDown
-            })
+            const inputs = [...this.state.inputs]
+            const input = inputs[indexBlock]
+                  input.value = input.value + id.toString()
+            this.setState({inputs})
         }
     }
 
     onDeleteSymbolHandler = () => {
-        if(this.state.inputFieldUP.length !== 0) {
-            const fieldUP = [...this.state.inputFieldUP]
-            fieldUP.splice(-1, 1)
-            const inputFieldUP = fieldUP.join('')
-            const inputFieldDown = inputFieldUP//todo calculate result
-            this.setState({
-                inputFieldUP: inputFieldUP,
-                inputFieldDown: inputFieldDown
-            })
-        }
+        const indexBlock = this.state.indexBlock
+        const inputs = [...this.state.inputs]
+        const input = inputs[indexBlock]
+        const value = (Array.from(input.value))
+              value.splice(-1, 1)
+              input.value = value.join('')
+              inputs[indexBlock] = input
+              this.setState({inputs})
     }
     onChangeInput = (event) => {}
 
