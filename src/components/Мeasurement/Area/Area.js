@@ -10,7 +10,8 @@ class Area extends Component {
         inputs: [
             {name: 'inputFieldUP', value: '1'},
             {name: 'inputFieldDown', value: '1'}
-        ]
+        ],
+        block: 'up'
     }
 
     clearInput = () => {
