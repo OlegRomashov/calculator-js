@@ -11,7 +11,7 @@ class Area extends Component {
             {name: 'inputFieldUP', value: ''},
             {name: 'inputFieldDown', value: ''}
         ],
-        indexBlock: '1'
+        indexBlock: 1
     }
 
     clearInput = () => {
@@ -30,11 +30,17 @@ class Area extends Component {
             this.clearInput()
         } else if(id === 10) {
             return
-        } else {
-            const inputs = [...this.state.inputs]
-            const input = inputs[indexBlock]
-                  input.value = input.value + id.toString()
-            this.setState({inputs})
+        } else if(id === 13) {
+            this.setState({
+                indexBlock: 0
+        })} else if(id === 14) {
+            this.setState({
+                indexBlock: 1
+            })} else {
+        const inputs = [...this.state.inputs]
+        const input = inputs[indexBlock]
+              input.value = input.value + id.toString()
+        this.setState({inputs})
         }
     }
 
@@ -48,6 +54,7 @@ class Area extends Component {
               inputs[indexBlock] = input
               this.setState({inputs})
     }
+
     onChangeInput = (event) => {}
 
     changeMeasureInputHandler = (index, event) => {
@@ -79,6 +86,7 @@ class Area extends Component {
                         <React.Fragment key={index}>
                             <MeasureBlock
                                 index={index}
+                                indexBlock={this.state.indexBlock}
                                 inputValue={input.value}
                                 onChangeMeasureInput={this.changeMeasureInputHandler}
                                 onChangeSelect={this.changeSelectHandler}

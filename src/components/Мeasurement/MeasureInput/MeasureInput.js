@@ -2,13 +2,28 @@ import React, {Component} from 'react'
 import './MeasureInput.css'
 
 class MeasureInput extends Component {
+    constructor(props) {
+        super(props)
+        this.inputRef = React.createRef()
+    }
+
+    componentDidMount() {
+        if(this.props.index === this.props.indexBlock) {
+            this.inputRef.current.focus()
+        }
+    }
+
+    componentDidUpdate() {
+        if(this.props.index === this.props.indexBlock) {
+            this.inputRef.current.focus()
+        }
+    }
 
     render() {
-        // const sections = ['section2', 'section3', 'section4', 'section5',
-        //     'section6', 'section7', 'section8']
         return(
             <div className='MeasureInput'>
                 <input
+                    ref = {this.inputRef}
                     type="text"
                     value={this.props.inputValue}
                     onChange={this.props.onChangeMeasureInput.bind(null, this.props.index)}

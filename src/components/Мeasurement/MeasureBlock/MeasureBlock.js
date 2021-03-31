@@ -5,17 +5,6 @@ import MeasureSelect from '../MeasureSelect/MeasureSelect'
 
 class MeasureBlock extends Component{
 
-    constructor(props) {
-        super(props)
-        this.inputRef = React.createRef()
-    }
-
-    componentDidMount() {
-        if (this.props.index === 1) {
-            // this.inputRef.current.focus().bind(this)
-        }
-    }
-
     render() {
         return (
             <div className="MeasureBlock">
@@ -24,8 +13,8 @@ class MeasureBlock extends Component{
                     selectionHandler={this.props.onChangeSelect}
                 />
                 <MeasureInput
-                    // ref={this.inputRef}
                     index={this.props.index}
+                    indexBlock={this.props.indexBlock}
                     inputValue={this.props.inputValue}
                     onChangeMeasureInput={this.props.onChangeMeasureInput}
                 />

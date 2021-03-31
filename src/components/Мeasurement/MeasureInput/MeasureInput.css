@@ -19,6 +19,7 @@
     text-align: right;
     outline: none;
     border: none;
+    cursor: pointer;
     background-color: #0b164f;
 }
 
