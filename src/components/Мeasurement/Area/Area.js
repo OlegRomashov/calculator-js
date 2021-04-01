@@ -11,7 +11,9 @@ class Area extends Component {
             {name: 'inputFieldUP', value: ''},
             {name: 'inputFieldDown', value: ''}
         ],
-        indexBlock: 1
+        indexBlock: 1,
+        upSelect: 'ac',
+        downSelect: 'ac'
     }
 
     clearInput = () => {
@@ -25,7 +27,8 @@ class Area extends Component {
 
     onKeyboardHandler = (id) => {
         const indexBlock = this.state.indexBlock
-
+        const inputs = [...this.state.inputs]
+        const input = inputs[indexBlock]
         if( id === 12) {
             this.clearInput()
         } else if(id === 10) {
@@ -36,11 +39,26 @@ class Area extends Component {
         })} else if(id === 14) {
             this.setState({
                 indexBlock: 1
-            })} else {
-        const inputs = [...this.state.inputs]
-        const input = inputs[indexBlock]
-              input.value = input.value + id.toString()
-        this.setState({inputs})
+        })} else if(id === ',') {
+                if(input.value.length === 0) {
+                    input.value = '0,'
+                    this.setState({inputs})
+                } else if (input.value.includes(',')) {
+                    return
+                } else {
+                    input.value = input.value + id.toString()
+                    this.setState({inputs})
+                }
+        } else if(id === 0) {
+            if(input.value === '0') {
+               return
+            } else {
+                input.value = input.value + id.toString()
+                this.setState({inputs})
+            }
+        } else {
+          input.value = input.value + id.toString()
+          this.setState({inputs})
         }
     }
 
