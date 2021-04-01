@@ -10,12 +10,14 @@ class MeasureBlock extends Component{
             <div className="MeasureBlock">
                 <MeasureSelect
                     index={this.props.index}
-                    selectionHandler={this.props.onChangeSelect}
+                    onChangeSelect={this.props.onChangeSelect}
                 />
                 <MeasureInput
                     index={this.props.index}
                     indexBlock={this.props.indexBlock}
                     inputValue={this.props.inputValue}
+                    upSelect={this.props.upSelect}
+                    downSelect={this.props.downSelect}
                     onChangeMeasureInput={this.props.onChangeMeasureInput}
                 />
             </div>

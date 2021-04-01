@@ -30,27 +30,10 @@ class MeasureInput extends Component {
                     placeholder='1'
                 />
                 <span>
-                    <span id={'section2'+this.props.index}>
-                     ac
-                    </span>
-                    <span id={'section3'+this.props.index} style={{display: 'none'}}>
-                        a
-                    </span>
-                    <span id={'section4'+this.props.index} style={{display: 'none'}}>
-                        ha
-                    </span>
-                    <span id={'section5'+this.props.index} style={{display: 'none'}}>
-                        cm2
-                    </span>
-                    <span id={'section6'+this.props.index} style={{display: 'none'}}>
-                        ft2
-                    </span>
-                    <span id={'section7'+this.props.index} style={{display: 'none'}}>
-                        in2
-                    </span>
-                    <span id={'section8'+this.props.index} style={{display: 'none'}}>
-                        m2
-                    </span>
+                    { this.props.index === 0
+                      ? this.props.upSelect
+                      : this.props.downSelect
+                    }
                 </span>
             </div>
         )

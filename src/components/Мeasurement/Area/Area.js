@@ -93,8 +93,17 @@ class Area extends Component {
         console.log(this.state.inputs)
     }
 
-    changeSelectHandler(){
-
+    changeSelectHandler = (index, select) => {
+        if(index === 0) {
+            this.setState({
+                upSelect: select.target.value
+            })
+            } else {
+            this.setState({
+                downSelect: select.target.value
+            })
+        }
+        console.log(index, select.target.value, this.state)
     }
 
     render() {
@@ -112,6 +121,8 @@ class Area extends Component {
                                 index={index}
                                 indexBlock={this.state.indexBlock}
                                 inputValue={input.value}
+                                upSelect={this.state.upSelect}
+                                downSelect={this.state.downSelect}
                                 onChangeMeasureInput={this.changeMeasureInputHandler}
                                 onChangeSelect={this.changeSelectHandler}
                             />
