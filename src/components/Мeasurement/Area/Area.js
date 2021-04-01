@@ -57,8 +57,12 @@ class Area extends Component {
                 this.setState({inputs})
             }
         } else {
-          input.value = input.value + id.toString()
-          this.setState({inputs})
+            if(input.value === '0') {
+                input.value = id.toString()
+                this.setState({inputs})
+            }
+            input.value = input.value + id.toString()
+            this.setState({inputs})
         }
     }
 
@@ -89,7 +93,9 @@ class Area extends Component {
         console.log(this.state.inputs)
     }
 
-    changeSelectHandler(){}
+    changeSelectHandler(){
+
+    }
 
     render() {
         const inputs = this.state.inputs
