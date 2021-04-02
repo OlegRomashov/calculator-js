@@ -87,9 +87,9 @@ class Area extends Component {
         const value = event.target.value
         const symbol = value[value.length-1]
         if(symbols.includes(symbol)) {
-            const input = this.state.inputs[index]
-            input.value = value
             const inputs = [...this.state.inputs]
+            const input = inputs[index]
+            input.value = value
             inputs[index] = input
             this.setState({inputs})
         }
