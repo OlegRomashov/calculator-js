@@ -9,7 +9,11 @@ const Pane = props => {
                 id={1}
                 onClickDrawer={props.onClickDrawer}
                 disabled={!props.casesLength}
-            >ЖУРНАЛ</PanelButton>
+            >{props.openLogDrawer === false
+              ? 'ЖУРНАЛ'
+              : 'КЛАВИАТУРА'
+            }
+                </PanelButton>
             <PanelButton
                 id={2}
                 onClickDrawer={props.onClickDrawer}

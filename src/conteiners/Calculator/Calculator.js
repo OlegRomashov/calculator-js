@@ -119,6 +119,7 @@ class Calculator extends Component {
                 />
                 <Pane
                     onClickDrawer={this.onClickDrawer}
+                    openLogDrawer={this.state.openLogDrawer}
                     casesLength={this.state.cases.length}
                 />
                 {this.state.openLogDrawer
