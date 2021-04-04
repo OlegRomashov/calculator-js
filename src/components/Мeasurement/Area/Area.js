@@ -117,8 +117,8 @@ class Area extends Component {
             coefficient = parseFloat(measureTable[measure])
             let input0 = inputs[0]
             let input1 = inputs[1]
-                input0.value = (+input1.value * coefficient).toString()
-            inputs[0] = input0
+                input1.value = (+input0.value * coefficient).toString()
+            inputs[1] = input1
             this.setState({inputs})
             // console.log('value: ', value)
             // console.log('this.state.upSelect: ', this.state.upSelect)
@@ -129,8 +129,8 @@ class Area extends Component {
             coefficient = parseFloat(measureTable[measure])
             let input0 = inputs[0]
             let input1 = inputs[1]
-                input1.value = (+input0.value * coefficient).toString()
-            inputs[1] = input1
+                input0.value = (+input1.value * coefficient).toString()
+            inputs[0] = input0
             this.setState({inputs})
             // console.log('value: ', value)
             // console.log('this.state.upSelect', this.state.downSelect)
