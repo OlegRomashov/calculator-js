@@ -16,7 +16,8 @@ class Area extends Component {
             ],
             indexBlock: 0,
             upSelect: 'ac',
-            downSelect: 'ac'
+            downSelect: 'ac',
+            coefficient: '1'
         }
     }
 
@@ -32,7 +33,7 @@ class Area extends Component {
     onKeyboardHandler = (id) => {
         const indexBlock = this.state.indexBlock
         const inputs = [...this.state.inputs]
-        const input = inputs[indexBlock]
+        const input = {...inputs[indexBlock]}
         if( id === 12) {
             this.clearInput()
         } else if(id === 10) {
@@ -51,6 +52,7 @@ class Area extends Component {
                     return
                 } else {
                     input.value = input.value + id.toString()
+                    inputs[indexBlock] = input
                     this.setState({inputs})
                 }
         } else if(id === 0) {
@@ -58,14 +60,17 @@ class Area extends Component {
                return
             } else {
                 input.value = input.value + id.toString()
+                inputs[indexBlock] = input
                 this.setState({inputs})
             }
         } else {
             if(input.value === '0') {
                 input.value = id.toString()
+                inputs[indexBlock] = input
                 this.setState({inputs})
             }
             input.value = input.value + id.toString()
+            inputs[indexBlock] = input
             this.setState({inputs})
         }
     }
@@ -83,24 +88,32 @@ class Area extends Component {
 
     changeMeasureInputHandler = (index, event) => {
         const symbols = [',', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
-
         const value = event.target.value
         const symbol = value[value.length-1]
+
         if(symbols.includes(symbol)) {
             const inputs = [...this.state.inputs]
-            const input = inputs[index]
-            input.value = value
-            inputs[index] = input
+            const coefficient = this.state.coefficient
+            const input0 = {...inputs[0]}
+            const input1 = {...inputs[1]}
+            if(index === 0) {
+                input0.value = value
+                input1.value = input1.value * coefficient
+            } else if(index === 1) {
+                input0.value = input0.value * coefficient
+                input1.value = value
+            }
+            inputs[0] = input0
+            inputs[1] = input1
             this.setState({inputs})
         }
-
     }
 
     changeSelectHandler = (index, select) => {
         const value = select.target.value
-        let measure = ''
-        let coefficient = null
         const inputs = [...this.state.inputs]
+        const input0 = {...inputs[0]}
+        const input1 = {...inputs[1]}
         const measureTable = {
             'ac-ac': '1', 'ac-a': '40.468', 'ac-ha': '0.404', 'ac-cm2': '40468564.224', 'ac-ft2': '43560',  'ac-in2': '6272640', 'ac-m2': '4046.856',
             'a-ac': '0.024', 'a-a': '1', 'a-ha': '0.01', 'a-cm2': '1000000', 'a-f2': '1076.391', 'a-in2': '155000.310', 'a-m2': '100',
@@ -112,23 +125,23 @@ class Area extends Component {
         }
 
         if(index === 0) {
-            this.setState((previousState) => ({upSelect: value}))
-            measure = value + '-' + this.state.downSelect
-            coefficient = parseFloat(measureTable[measure])
-            let input0 = inputs[0]
-            let input1 = inputs[1]
+            this.setState({upSelect: value})
+            const measure = value + '-' + this.state.downSelect
+            const coefficient = parseFloat(measureTable[measure])
+
                 input1.value = (+input0.value * coefficient).toString()
             inputs[1] = input1
-            this.setState({inputs})
+            this.setState({inputs, coefficient})
+            console.log('coefficient', this.state.coefficient)
         } else if(index === 1) {
             this.setState({downSelect: value})
-            measure = this.state.upSelect + '-' + value
-            coefficient = parseFloat(measureTable[measure])
-            let input0 = inputs[0]
-            let input1 = inputs[1]
-                input0.value = (+input1.value * coefficient).toString()
-            inputs[0] = input0
-            this.setState({inputs})
+            const measure = this.state.upSelect + '-' + value
+            const coefficient = parseFloat(measureTable[measure])
+
+                input1.value = (+input0.value * coefficient).toString()
+            inputs[1] = input1
+            this.setState({inputs, coefficient})
+            console.log('coefficient', this.state.coefficient)
         }
     }
 
