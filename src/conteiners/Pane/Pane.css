@@ -3,3 +3,7 @@
     height: 40px;
     background-color: #091E39;
 }
+
+.Pane button:last-child {
+    margin-left: 185px;
+}

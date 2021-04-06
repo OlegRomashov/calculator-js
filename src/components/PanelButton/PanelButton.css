@@ -15,6 +15,7 @@
 
 .PanelButton:disabled {
     color: #ccc;
+    opacity: .5;
 }
 
 .PanelButton:hover {

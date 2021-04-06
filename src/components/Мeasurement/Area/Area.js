@@ -6,13 +6,12 @@ import MeasureKeyboard from '../MeasureKeyboard/MeasureKeyboard'
 import './Area.css'
 
 class Area extends Component {
-
     constructor(props) {
         super(props)
         this.state = {
             inputs: [
-                {name: 'inputFieldUP', value: '1'},
-                {name: 'inputFieldDown', value: '1'}
+                {name: 'inputFieldUP', value: ''},
+                {name: 'inputFieldDown', value: ''}
             ],
             indexBlock: 0,
             upSelect: 'ac',
@@ -22,18 +21,21 @@ class Area extends Component {
     }
 
     clearInput = () => {
-        this.setState({
-            inputs: [
-                {name: 'inputFieldUP', value: '1'},
-                {name: 'inputFieldDown', value: '1'}
-            ]
-        })
+        let inputs = [...this.state.inputs]
+        const input0 = inputs[0]
+        const input1 = inputs[1]
+        input0.value = ''
+        input1.value = ''
+        this.setState({inputs})
     }
 
     onKeyboardHandler = (id) => {
         const indexBlock = this.state.indexBlock
         const inputs = [...this.state.inputs]
-        const input = {...inputs[indexBlock]}
+        const inputFocus = inputs[indexBlock]
+        const inputNoFocus = inputs[1 - indexBlock]
+        const coefficient = this.state.coefficient
+
         if( id === 12) {
             this.clearInput()
         } else if(id === 10) {
@@ -45,32 +47,43 @@ class Area extends Component {
             this.setState({
                 indexBlock: 1
         })} else if(id === ',') {
-                if(input.value.length === 0) {
-                    input.value = '0,'
+                if(inputFocus.value.length === 0) {
+                    inputFocus.value = '0,'
+                    inputNoFocus.value = '0,'
+                    inputs[indexBlock] = inputFocus
+                    inputs[1-indexBlock] = inputNoFocus
                     this.setState({inputs})
-                } else if (input.value.includes(',')) {
+                } else if (inputFocus.value.includes(',')) {
                     return
                 } else {
-                    input.value = input.value + id.toString()
-                    inputs[indexBlock] = input
+                    inputFocus.value = inputFocus.value + id.toString()
+                    inputNoFocus.value = (+inputFocus.value * coefficient).toString()
+                    inputs[indexBlock] = inputFocus
+                    inputs[1-indexBlock] = inputNoFocus
                     this.setState({inputs})
                 }
         } else if(id === 0) {
-            if(input.value === '0') {
+            if(inputFocus.value === '0') {
                return
             } else {
-                input.value = input.value + id.toString()
-                inputs[indexBlock] = input
+                inputFocus.value = inputFocus.value + id.toString()
+                inputNoFocus.value = (+inputFocus.value * coefficient).toString()
+                inputs[indexBlock] = inputFocus
+                inputs[1-indexBlock] = inputNoFocus
                 this.setState({inputs})
             }
         } else {
-            if(input.value === '0') {
-                input.value = id.toString()
-                inputs[indexBlock] = input
+            if(inputFocus.value === '0') {
+                inputFocus.value = id.toString()
+                inputNoFocus.value = (+inputFocus.value * coefficient).toString()
+                inputs[indexBlock] = inputFocus
+                inputs[1-indexBlock] = inputNoFocus
                 this.setState({inputs})
             }
-            input.value = input.value + id.toString()
-            inputs[indexBlock] = input
+            inputFocus.value = inputFocus.value + id.toString()
+            inputNoFocus.value = (+inputFocus.value * coefficient).toString()
+            inputs[indexBlock] = inputFocus
+            inputs[1-indexBlock] = inputNoFocus
             this.setState({inputs})
         }
     }
@@ -78,33 +91,32 @@ class Area extends Component {
     onDeleteSymbolHandler = () => {
         const indexBlock = this.state.indexBlock
         const inputs = [...this.state.inputs]
-        const input = inputs[indexBlock]
-        const value = (Array.from(input.value))
+        const inputFocus = inputs[indexBlock]
+        const inputNoFocus = inputs[1 - indexBlock]
+        const coefficient = this.state.coefficient
+        const value = (Array.from(inputFocus.value))
               value.splice(-1, 1)
-              input.value = value.join('')
-              inputs[indexBlock] = input
+              inputFocus.value = value.join('')
+              inputNoFocus.value = (+inputFocus.value * coefficient).toString()
+              inputs[indexBlock] = inputFocus
+              inputs[1 - indexBlock] = inputNoFocus
               this.setState({inputs})
     }
 
     changeMeasureInputHandler = (index, event) => {
-        const symbols = [',', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+        const symbols = ['.', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
         const value = event.target.value
         const symbol = value[value.length-1]
 
         if(symbols.includes(symbol)) {
             const inputs = [...this.state.inputs]
             const coefficient = this.state.coefficient
-            const input0 = {...inputs[0]}
-            const input1 = {...inputs[1]}
-            if(index === 0) {
-                input0.value = value
-                input1.value = input1.value * coefficient
-            } else if(index === 1) {
-                input0.value = input0.value * coefficient
-                input1.value = value
-            }
-            inputs[0] = input0
-            inputs[1] = input1
+            const inputFocus = {...inputs[index]}
+            const inputNoFocus = {...inputs[1 - index]}
+            inputFocus.value = value
+            inputNoFocus.value = (+inputFocus.value * coefficient).toString()
+            inputs[index] = inputFocus
+            inputs[1 - index] = inputNoFocus
             this.setState({inputs})
         }
     }
@@ -112,8 +124,8 @@ class Area extends Component {
     changeSelectHandler = (index, select) => {
         const value = select.target.value
         const inputs = [...this.state.inputs]
-        const input0 = {...inputs[0]}
-        const input1 = {...inputs[1]}
+        const inputUp = inputs[0]
+        const inputDown = inputs[1]
         const measureTable = {
             'ac-ac': '1', 'ac-a': '40.468', 'ac-ha': '0.404', 'ac-cm2': '40468564.224', 'ac-ft2': '43560',  'ac-in2': '6272640', 'ac-m2': '4046.856',
             'a-ac': '0.024', 'a-a': '1', 'a-ha': '0.01', 'a-cm2': '1000000', 'a-f2': '1076.391', 'a-in2': '155000.310', 'a-m2': '100',
@@ -128,20 +140,16 @@ class Area extends Component {
             this.setState({upSelect: value})
             const measure = value + '-' + this.state.downSelect
             const coefficient = parseFloat(measureTable[measure])
-
-                input1.value = (+input0.value * coefficient).toString()
-            inputs[1] = input1
+                  inputDown.value = (+inputUp.value * coefficient).toString()
+                  inputs[1] = inputDown
             this.setState({inputs, coefficient})
-            console.log('coefficient', this.state.coefficient)
         } else if(index === 1) {
             this.setState({downSelect: value})
             const measure = this.state.upSelect + '-' + value
             const coefficient = parseFloat(measureTable[measure])
-
-                input1.value = (+input0.value * coefficient).toString()
-            inputs[1] = input1
+                  inputDown.value = (+inputUp.value * coefficient).toString()
+                  inputs[1] = inputDown
             this.setState({inputs, coefficient})
-            console.log('coefficient', this.state.coefficient)
         }
     }
 

@@ -4,7 +4,7 @@ import './PanelButton.css'
 const PanelButton = props => {
         return(
             <button
-                    id={props.id}
+                    // id={props.id}
                     className={'PanelButton'}
                     onClick={() => props.onClickDrawer(props.id)}
                     disabled={props.disabled}

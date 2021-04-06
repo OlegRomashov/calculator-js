@@ -121,6 +121,7 @@ class Calculator extends Component {
                     onClickDrawer={this.onClickDrawer}
                     openLogDrawer={this.state.openLogDrawer}
                     casesLength={this.state.cases.length}
+                    inputFieldLength={this.state.inputField}
                 />
                 {this.state.openLogDrawer
                     ? <Log

@@ -18,10 +18,10 @@ const Pane = props => {
                 id={2}
                 onClickDrawer={props.onClickDrawer}
             ><i className="fas fa-ruler"></i></PanelButton>
-            <PanelButton />
             <PanelButton
                 id={3}
                 onClickDrawer={props.onClickDrawer}
+                disabled={!props.inputFieldLength}
             ><i className="fas fa-backspace"></i></PanelButton>
         </div>
     )
