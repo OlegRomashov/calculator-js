@@ -10,8 +10,8 @@ class Area extends Component {
         super(props)
         this.state = {
             inputs: [
-                {name: 'inputFieldUP', value: ''},
-                {name: 'inputFieldDown', value: ''}
+                {name: 'inputFieldUP', value: '1'},
+                {name: 'inputFieldDown', value: '1'}
             ],
             indexBlock: 0,
             upSelect: 'ac',
@@ -140,15 +140,21 @@ class Area extends Component {
             this.setState({upSelect: value})
             const measure = value + '-' + this.state.downSelect
             const coefficient = parseFloat(measureTable[measure])
-                  inputDown.value = (+inputUp.value * coefficient).toString()
-                  inputs[1] = inputDown
+            if(inputUp.value.length === 0) {
+                return
+            }
+            inputDown.value = (+inputUp.value * coefficient).toFixed(3).toString()
+            inputs[1] = inputDown
             this.setState({inputs, coefficient})
         } else if(index === 1) {
             this.setState({downSelect: value})
             const measure = this.state.upSelect + '-' + value
             const coefficient = parseFloat(measureTable[measure])
-                  inputDown.value = (+inputUp.value * coefficient).toString()
-                  inputs[1] = inputDown
+            if(inputDown.value.length === 0) {
+                return
+            }
+            inputDown.value = (+inputUp.value * coefficient).toFixed(3).toString()
+            inputs[1] = inputDown
             this.setState({inputs, coefficient})
         }
     }
