@@ -107,9 +107,7 @@ class Calculator extends Component {
         const lastOperation = this.state.lastOperation
         const cases = [...this.state.cases]
         const inputField = [...this.state.inputField]
-              // inputField.push(id)
         const lastSymbol = inputField[inputField.length-1]
-        // const input = inputField.join('').toString()
 
         if(symbols.includes(id)){
                   inputField.push(id)
@@ -137,10 +135,25 @@ class Calculator extends Component {
                 })
             } else if(lastSymbol === '.') {
                 return
-            } else if(inputField.includes('.')) {
-                console.log('есть')
             } else if(operations.includes(lastSymbol)) {
                 inputField.push('0.')
+                const input = inputField.join('').toString()
+                this.setState({
+                    inputField: input
+                })
+            } else if(inputField.includes('.')) {
+                const revInputField = [...inputField].reverse()
+                console.log('revInputField', revInputField)
+                console.log('lastOperation', lastOperation)
+                const position = revInputField.indexOf(lastOperation)
+                console.log('position', position)
+                const minArr = inputField.slice(-position)
+                console.log('minArr', minArr)
+                if(minArr.includes('.')) {
+                    return
+                }
+                inputField.push('.')
+                console.log('inputField', inputField)
                 const input = inputField.join('').toString()
                 this.setState({
                     inputField: input
@@ -153,7 +166,6 @@ class Calculator extends Component {
                 this.setState({
                     inputField: input
                 })
-                // console.log(this.state)
             }
 
         } else if(id === '+/-') {
@@ -161,10 +173,6 @@ class Calculator extends Component {
         } else if(id === '()') {
             console.log('()')
         } else if(id === "=") {
-            // if(operations.includes(lastSymbol)) {
-            //     return
-            // }
-            // inputField.splice(-1, 1)
             const input = inputField.join('').toString()
             const code = math.compile(input)
             const res = code.evaluate().toString()
@@ -182,14 +190,14 @@ class Calculator extends Component {
                     const input = inputField.join('').toString()
                     this.setState({
                         inputField: input,
-                        operation: id,
+                        lastOperation: id,
                     })
                 } else {
                           inputField.push(id)
                     const input = inputField.join('').toString()
                     this.setState({
                         inputField: input,
-                        operation: id,
+                        lastOperation: id,
                     })
                 }
             }
