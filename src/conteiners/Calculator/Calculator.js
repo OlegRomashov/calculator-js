@@ -15,7 +15,7 @@ class Calculator extends Component {
     state = {
         inputField: '',
         resultField: '',
-        // operation: null,
+        operation: '',
         // prevNumber: null,
         // prevOperation: null,
         openLogDrawer: false,
@@ -102,11 +102,14 @@ class Calculator extends Component {
     }
 
     onKeyboardHandler = (id) => {
-        const symbols = ['.', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
-        const inputField = [...this.state.inputField]
+        const symbols = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+        const operations = ['/', '*', '+', '-']
         const cases = [...this.state.cases]
-        inputField.push(id)
+        const inputField = [...this.state.inputField]
+              inputField.push(id)
+        const lastSymbol = inputField[inputField.length-2]
         const input = inputField.join('').toString()
+
         if(symbols.includes(id)){
             const code = math.compile(input)
             const res = code.evaluate()
@@ -119,20 +122,45 @@ class Calculator extends Component {
                 inputField: '',
                 resultField: ''
             })
-
+        } else if(id === '%') {
+            console.log('%')
+        } else if(id === '.') {
+            console.log('.')
+        } else if(id === '+/-') {
+            console.log('+/-')
+        } else if(id === '()') {
+            console.log('()')
         } else if(id === "=") {
-            // input.replace('=', '')
-            // console.log(input)
-            // const code1 = math.compile(input)
-            // const res = code1.evaluate()
-            // cases.push({field: input, equally: res})
-            // this.setState({
-            //     cases
-            // })
-        } else {
+            if(operations.includes(lastSymbol)) {
+                return
+            }
+            inputField.splice(-1, 1)
+            const input = inputField.join('').toString()
+            const code = math.compile(input)
+            const res = code.evaluate().toString()
+            cases.push({field: input, equally: res})
             this.setState({
-                inputField: input
+                inputField: res,
+                resultField: '',
+                cases
             })
+        } else {
+            if(inputField.length !==1) {
+                if(operations.includes(lastSymbol)) {
+                    inputField.splice(-2, 1)
+                    const input = inputField.join('').toString()
+                    this.setState({
+                        inputField: input,
+                        operation: id,
+                    })
+                } else {
+                    const input = inputField.join('').toString()
+                    this.setState({
+                        inputField: input,
+                        operation: id,
+                    })
+                }
+            }
         }
     }
 
