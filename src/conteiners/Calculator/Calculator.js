@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import {create, all} from 'mathjs'
 import './Calculator.css'
 import Scoreboard from '../Scoreboard/Scoreboard'
 import Keybord from '../Keyboard/Keyboard'
@@ -6,6 +7,9 @@ import Pane from '../Pane/Pane'
 import Log from '../Log/Log'
 import Converter from '../Converter/Converter'
 // import {calculate} from '../../utils/calculate'
+
+const config = { }
+const math = create(all, config)
 
 class Calculator extends Component {
     state = {
@@ -18,15 +22,15 @@ class Calculator extends Component {
         openConverterDrawer: false,
         cases: [
             {field: '75-56', equally: 19},
-            {field: '24+34', equally: 57},
-            {field: '44*2', equally: 88},
-            {field: '75-56', equally: 19},
-            {field: '124+234', equally: 357},
-            {field: '44*2', equally: 88},
-            {field: '44/11', equally: 4},
-            {field: '75-56', equally: 19},
-            {field: '24+34', equally: 57},
-            {field: '44*2', equally: 88},
+            // {field: '24+34', equally: 57},
+            // {field: '44*2', equally: 88},
+            // {field: '75-56', equally: 19},
+            // {field: '124+234', equally: 357},
+            // {field: '44*2', equally: 88},
+            // {field: '44/11', equally: 4},
+            // {field: '75-56', equally: 19},
+            // {field: '24+34', equally: 57},
+            // {field: '44*2', equally: 88},
         ]
     }
 
@@ -60,15 +64,27 @@ class Calculator extends Component {
     }
 
     onDeleteSymbolHandler = () => {
+        const symbols = ['.', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
         if(this.state.inputField.length !== 0) {
             const field = [...this.state.inputField]
             field.splice(-1, 1)
-            const inputField = field.join('')
-            const res = inputField//todo calculate result
+            const symbol = field[field.length-1]
+            const inputField = field.join('').toString()
             this.setState({
-                inputField: inputField,
-                resultField: res
+                inputField
             })
+            if(symbols.includes(symbol)) {
+                const code = math.compile(inputField)
+                const res = code.evaluate()
+                this.setState({
+                    resultField: res
+                })
+            } else {
+                this.setState({
+                    resultField: ''
+                })
+            }
+
         }
     }
 
@@ -86,14 +102,38 @@ class Calculator extends Component {
     }
 
     onKeyboardHandler = (id) => {
+        const symbols = ['.', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
         const inputField = [...this.state.inputField]
+        const cases = [...this.state.cases]
         inputField.push(id)
-        const input = inputField.join('')
-        const res = input//todo calculate result
-        this.setState({
-            inputField: input,
-            resultField: res
-        })
+        const input = inputField.join('').toString()
+        if(symbols.includes(id)){
+            const code = math.compile(input)
+            const res = code.evaluate()
+            this.setState({
+                inputField: input,
+                resultField: res
+            })
+        } else if(id === 'C') {
+            this.setState({
+                inputField: '',
+                resultField: ''
+            })
+
+        } else if(id === "=") {
+            // input.replace('=', '')
+            // console.log(input)
+            // const code1 = math.compile(input)
+            // const res = code1.evaluate()
+            // cases.push({field: input, equally: res})
+            // this.setState({
+            //     cases
+            // })
+        } else {
+            this.setState({
+                inputField: input
+            })
+        }
     }
 
     onChangeInput = (event) => {

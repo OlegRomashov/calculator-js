@@ -94,7 +94,7 @@ class Area extends Component {
         const inputFocus = inputs[indexBlock]
         const inputNoFocus = inputs[1 - indexBlock]
         const coefficient = this.state.coefficient
-        const value = (Array.from(inputFocus.value))
+        const value = Array.from(inputFocus.value)
               value.splice(-1, 1)
               inputFocus.value = value.join('')
               inputNoFocus.value = (+inputFocus.value * coefficient).toString()
