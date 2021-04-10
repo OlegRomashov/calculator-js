@@ -6,7 +6,7 @@ import Keybord from '../Keyboard/Keyboard'
 import Pane from '../Pane/Pane'
 import Log from '../Log/Log'
 import Converter from '../Converter/Converter'
-// import {calculate} from '../../utils/calculate'
+import axios from '../../axios/axios-case'
 
 const config = { }
 const math = create(all, config)
@@ -16,22 +16,13 @@ class Calculator extends Component {
         inputField: '',
         resultField: '',
         lastOperation: '',
-        // prevNumber: null,
-        // prevOperation: null,
         openLogDrawer: false,
         openConverterDrawer: false,
-        cases: [
-            {field: '75-56', equally: 19},
-            // {field: '24+34', equally: 57},
-            // {field: '44*2', equally: 88},
-            // {field: '75-56', equally: 19},
-            // {field: '124+234', equally: 357},
-            // {field: '44*2', equally: 88},
-            // {field: '44/11', equally: 4},
-            // {field: '75-56', equally: 19},
-            // {field: '24+34', equally: 57},
-            // {field: '44*2', equally: 88},
-        ]
+        case: {
+            field: '',
+            equally: ''
+        },
+        cases: []
     }
 
     onExampleHandler = index => {
@@ -101,11 +92,11 @@ class Calculator extends Component {
         })
     }
 
-    onKeyboardHandler = (id) => {
+    onKeyboardHandler = async id => {
         const symbols = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
         const operations = ['/', '*', '+', '-']
         const lastOperation = this.state.lastOperation
-        const cases = [...this.state.cases]
+        const cAse = {}
         const inputField = [...this.state.inputField]
         const lastSymbol = inputField[inputField.length-1]
 
@@ -125,9 +116,7 @@ class Calculator extends Component {
             })
         } else if(id === '%') {
             console.log('%')
-        }
-
-        else if(id === '.') {
+        } else if(id === '.') {
             if(inputField.length === 0) {
                 this.setState({
                     inputField: '0.',
@@ -143,31 +132,23 @@ class Calculator extends Component {
                 })
             } else if(inputField.includes('.')) {
                 const revInputField = [...inputField].reverse()
-                console.log('revInputField', revInputField)
-                console.log('lastOperation', lastOperation)
                 const position = revInputField.indexOf(lastOperation)
-                console.log('position', position)
                 const minArr = inputField.slice(-position)
-                console.log('minArr', minArr)
                 if(minArr.includes('.')) {
                     return
                 }
                 inputField.push('.')
-                console.log('inputField', inputField)
                 const input = inputField.join('').toString()
                 this.setState({
                     inputField: input
                 })
-            }
-
-            else {
+            } else {
                 inputField.push(id)
                 const input = inputField.join('').toString()
                 this.setState({
                     inputField: input
                 })
             }
-
         } else if(id === '+/-') {
             console.log('+/-')
         } else if(id === '()') {
@@ -176,12 +157,18 @@ class Calculator extends Component {
             const input = inputField.join('').toString()
             const code = math.compile(input)
             const res = code.evaluate().toString()
-            cases.push({field: input, equally: res})
+                  cAse.field = input
+                  cAse.equally = res
             this.setState({
                 inputField: res,
                 resultField: '',
-                cases
+                case: cAse
             })
+            try {
+                await axios.post('/cases.json', cAse)
+            } catch (e) {
+                console.log(e)
+            }
         } else {
             if(inputField.length !==0) {
                 if(operations.includes(lastSymbol)) {
@@ -215,6 +202,22 @@ class Calculator extends Component {
                 resultField: res
             })
         }
+    }
+
+    async componentDidMount() {
+       try {
+           const response = await axios.get('/cases.json')
+           const data = response.data
+           const cases = []
+           for (let code in data) {
+               cases.push(data[code]);
+           }
+           this.setState({
+               cases
+           })
+       } catch (e) {
+           console.log(e)
+       }
     }
 
     render() {
