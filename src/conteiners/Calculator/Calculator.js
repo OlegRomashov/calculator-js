@@ -79,11 +79,18 @@ class Calculator extends Component {
         }
     }
 
-    onLogClearHandler = () => {
+    onLogClearHandler = async () => {
         this.setState({
             cases: [],
             openLogDrawer: false
         })
+
+        try {
+            await axios.delete('/cases.json')
+        } catch (e) {
+            console.log(e)
+        }
+
     }
 
     onBackDropHandler = () => {
@@ -154,6 +161,9 @@ class Calculator extends Component {
         } else if(id === '()') {
             console.log('()')
         } else if(id === "=") {
+            if(operations.includes(lastSymbol)) {
+                return
+            }
             const input = inputField.join('').toString()
             const code = math.compile(input)
             const res = code.evaluate().toString()
@@ -218,6 +228,22 @@ class Calculator extends Component {
        } catch (e) {
            console.log(e)
        }
+    }
+
+    async componentDidUpdate() {
+        try {
+            const response = await axios.get('/cases.json')
+            const data = response.data
+            const cases = []
+            for (let code in data) {
+                cases.push(data[code]);
+            }
+            this.setState({
+                cases
+            })
+        } catch (e) {
+            console.log(e)
+        }
     }
 
     render() {
