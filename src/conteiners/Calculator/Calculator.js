@@ -106,6 +106,15 @@ class Calculator extends Component {
         const cAse = {}
         const inputField = [...this.state.inputField]
         const lastSymbol = inputField[inputField.length-1]
+        const revInputField = [...inputField].reverse()
+        const position = revInputField.indexOf(lastOperation)
+        const minArr = inputField.slice(-position)
+
+        if(lastOperation === '=') {
+            this.setState({
+                inputField: ''
+            })
+        }
 
         if(symbols.includes(id)){
                   inputField.push(id)
@@ -138,9 +147,7 @@ class Calculator extends Component {
                     inputField: input
                 })
             } else if(inputField.includes('.')) {
-                const revInputField = [...inputField].reverse()
-                const position = revInputField.indexOf(lastOperation)
-                const minArr = inputField.slice(-position)
+
                 if(minArr.includes('.')) {
                     return
                 }
@@ -172,8 +179,10 @@ class Calculator extends Component {
             this.setState({
                 inputField: res,
                 resultField: '',
-                case: cAse
+                case: cAse,
+                lastOperation: id
             })
+            console.log(this.state)
             try {
                 await axios.post('/cases.json', cAse)
             } catch (e) {
