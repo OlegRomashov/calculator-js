@@ -80,12 +80,11 @@ class Calculator extends Component {
     }
 
     onLogClearHandler = async () => {
-        this.setState({
-            cases: [],
-            openLogDrawer: false
-        })
-
         try {
+            this.setState({
+                openLogDrawer: false,
+                inputField: ''
+            })
             await axios.delete('/cases.json')
         } catch (e) {
             console.log(e)
@@ -110,12 +109,6 @@ class Calculator extends Component {
         const position = revInputField.indexOf(lastOperation)
         const minArr = inputField.slice(-position)
 
-        if(lastOperation === '=') {
-            this.setState({
-                inputField: ''
-            })
-        }
-
         if(symbols.includes(id)){
                   inputField.push(id)
             const input = inputField.join('').toString()
@@ -133,36 +126,20 @@ class Calculator extends Component {
         } else if(id === '%') {
             console.log('%')
         } else if(id === '.') {
-            if(inputField.length === 0) {
-                this.setState({
-                    inputField: '0.',
-                    resultField: '0.'
-                })
-            } else if(lastSymbol === '.') {
-                return
-            } else if(operations.includes(lastSymbol)) {
+            if(inputField.length === 0 || operations.includes(lastSymbol)) {
                 inputField.push('0.')
-                const input = inputField.join('').toString()
-                this.setState({
-                    inputField: input
-                })
-            } else if(inputField.includes('.')) {
-
-                if(minArr.includes('.')) {
+            } else if(lastSymbol === id) {
+                return
+            } else {
+                if(minArr.includes(id)) {
                     return
                 }
-                inputField.push('.')
-                const input = inputField.join('').toString()
-                this.setState({
-                    inputField: input
-                })
-            } else {
                 inputField.push(id)
-                const input = inputField.join('').toString()
-                this.setState({
-                    inputField: input
-                })
             }
+            const input = inputField.join('').toString()
+            this.setState({
+                inputField: input
+            })
         } else if(id === '+/-') {
             console.log('+/-')
         } else if(id === '()') {
@@ -182,7 +159,6 @@ class Calculator extends Component {
                 case: cAse,
                 lastOperation: id
             })
-            console.log(this.state)
             try {
                 await axios.post('/cases.json', cAse)
             } catch (e) {
@@ -192,30 +168,26 @@ class Calculator extends Component {
             if(inputField.length !==0) {
                 if(operations.includes(lastSymbol)) {
                     inputField.splice(-1, 1)
-                          inputField.push(id)
-                    const input = inputField.join('').toString()
-                    this.setState({
-                        inputField: input,
-                        lastOperation: id,
-                    })
-                } else {
-                          inputField.push(id)
-                    const input = inputField.join('').toString()
-                    this.setState({
-                        inputField: input,
-                        lastOperation: id,
-                    })
                 }
+                inputField.push(id)
+                const input = inputField.join('').toString()
+                this.setState({
+                    inputField: input,
+                    lastOperation: id,
+                })
             }
         }
     }
 
     onChangeInput = (event) => {
-        const symbols = ['(', ')', '%', '/', '7', '8', '9', '*', '4', '5', '6', '-', '1', '2', '3', '+', '0', ',', '=']
+        const symbols = ['7', '8', '9', '4', '5', '6', '1', '2', '3', '0', '.']
         const value = event.target.value
+        console.log(typeof value)
         const symbol = value[value.length-1]
         if(symbols.includes(symbol)) {
-            const res = value
+            const code = math.compile(value)
+            console.log(typeof code)
+            const res = code.evaluate().toString()
             this.setState({
                 inputField: value,
                 resultField: res
@@ -228,8 +200,8 @@ class Calculator extends Component {
            const response = await axios.get('/cases.json')
            const data = response.data
            const cases = []
-           for (let code in data) {
-               cases.push(data[code]);
+           for (let example in data) {
+               cases.push(data[example]);
            }
            this.setState({
                cases
@@ -244,8 +216,8 @@ class Calculator extends Component {
             const response = await axios.get('/cases.json')
             const data = response.data
             const cases = []
-            for (let code in data) {
-                cases.push(data[code]);
+            for (let example in data) {
+                cases.push(data[example]);
             }
             this.setState({
                 cases
