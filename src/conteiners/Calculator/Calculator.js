@@ -18,10 +18,7 @@ class Calculator extends Component {
         lastOperation: '',
         openLogDrawer: false,
         openConverterDrawer: false,
-        case: {
-            field: '',
-            equally: ''
-        },
+        case: {},
         cases: []
     }
 
