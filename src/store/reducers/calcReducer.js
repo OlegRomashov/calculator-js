@@ -1,5 +1,5 @@
 import {FETCH_EXAMPLES_ERROR, FETCH_EXAMPLES_SUCCESS, CLEAR_EXAMPLES_SUCCESS,
-    CLEAR_EXAMPLES_ERROR, OPEN_LOG_LOGDRAWER} from "../actions/actionTypes";
+    CLEAR_EXAMPLES_ERROR, OPEN_LOGDRAWER, CONVERTER_DRAWER} from "../actions/actionTypes";
 
 const initialState = {
     inputField: '',
@@ -33,9 +33,13 @@ export default function calcReducer (state = initialState, action) {
             return {
                 ...state, error: action.error
             }
-        case OPEN_LOG_LOGDRAWER:
+        case OPEN_LOGDRAWER:
             return {
                 ...state, openLogDrawer: !action.openLogDrawer
+            }
+        case CONVERTER_DRAWER:
+            return {
+                ...state, openConverterDrawer: !action.openConverterDrawer, openLogDrawer: false
             }
         default:
             return state

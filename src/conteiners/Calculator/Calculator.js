@@ -7,7 +7,7 @@ import Pane from '../Pane/Pane'
 import Log from '../Log/Log'
 import Converter from '../Converter/Converter'
 import {connect} from 'react-redux'
-import {fetchExamples, clearExamples, createCase, logDrawer} from '../../store/actions/actionCalc'
+import {fetchExamples, clearExamples, createCase, logDrawer, converterDrawer} from '../../store/actions/actionCalc'
 
 const config = { }
 const math = create(all, config)
@@ -37,10 +37,7 @@ class Calculator extends Component {
     }
 
     onConverterDrawerHandler = () => {
-        this.setState({
-            openConverterDrawer: !this.state.openConverterDrawer,
-            openLogDrawer: false
-        })
+        this.props.converterDrawer()
     }
 
     onDeleteSymbolHandler = () => {
@@ -250,7 +247,8 @@ function mapDispatchToProps(dispatch) {
         fetchExamples: () => dispatch(fetchExamples()),
         clearExamples: () => dispatch(clearExamples()),
         createCase: () => dispatch(createCase()),
-        logDrawer: () => dispatch(logDrawer())
+        logDrawer: () => dispatch(logDrawer()),
+        converterDrawer: () => dispatch(converterDrawer())
 
     }
 }

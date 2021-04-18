@@ -1,5 +1,6 @@
 import axios from '../../axios/axios-case'
-import {FETCH_EXAMPLES_ERROR, FETCH_EXAMPLES_SUCCESS, CLEAR_EXAMPLES_SUCCESS, CLEAR_EXAMPLES_ERROR, OPEN_LOG_LOGDRAWER} from "./actionTypes";
+import {FETCH_EXAMPLES_ERROR, FETCH_EXAMPLES_SUCCESS, CLEAR_EXAMPLES_SUCCESS, CLEAR_EXAMPLES_ERROR,
+    OPEN_LOGDRAWER, CONVERTER_DRAWER} from "./actionTypes";
 
 export function fetchExamples() {
     return async dispatch => {
@@ -55,14 +56,20 @@ export function clearExamplesError(e) {
     }
 }
 
-export function createCase() {
-    return async dispatch => {
-
+export function logDrawer() {
+    return {
+        type: OPEN_LOGDRAWER
     }
 }
 
-export function logDrawer() {
+export function converterDrawer() {
     return {
-        type: OPEN_LOG_LOGDRAWER
+        type: CONVERTER_DRAWER
+    }
+}
+
+export function createCase() {
+    return async dispatch => {
+
     }
 }
