@@ -6,27 +6,13 @@ import Keybord from '../Keyboard/Keyboard'
 import Pane from '../Pane/Pane'
 import Log from '../Log/Log'
 import Converter from '../Converter/Converter'
-// import axios from '../../axios/axios-case'
 import {connect} from 'react-redux'
-import {fetchExamples, clearExamples, createCase} from '../../store/actions/actionCalc'
+import {fetchExamples, clearExamples, createCase, logDrawer} from '../../store/actions/actionCalc'
 
 const config = { }
 const math = create(all, config)
 
 class Calculator extends Component {
-    // state = {
-    //     inputField: '',
-    //     resultField: '',
-    //     lastOperation: '',
-    //     openLogDrawer: false,
-    //     openConverterDrawer: false,
-    //     case: {
-    //         field: '',
-    //         equally: ''
-    //     },
-    //     cases: []
-    // }
-
     onExampleHandler = index => {
         const equally = this.state.cases[index].equally.toString()
         this.setState({
@@ -44,9 +30,10 @@ class Calculator extends Component {
     }
 
     onLogDrawerHandler = () => {
-        this.setState({
-            openLogDrawer: !this.state.openLogDrawer,
-        })
+        this.props.logDrawer()
+        // this.setState({
+        //     openLogDrawer: !this.state.openLogDrawer,
+        // })
     }
 
     onConverterDrawerHandler = () => {
@@ -83,15 +70,6 @@ class Calculator extends Component {
 
     onLogClearHandler = async () => {
         this.props.clearExamples()
-        // try {
-        //     this.setState({
-        //         openLogDrawer: false,
-        //         inputField: ''
-        //     })
-        //     await axios.delete('/cases.json')
-        // } catch (e) {
-        //     console.log(e)
-        // }
     }
 
     onBackDropHandler = () => {
@@ -161,12 +139,12 @@ class Calculator extends Component {
                 case: cAse,
                 lastOperation: id
             })
-            createCase()
-            // try {
-            //     await axios.post('/cases.json', cAse)
-            // } catch (e) {
-            //     console.log(e)
-            // }
+                createCase()
+                // try {
+                //     await axios.post('/cases.json', this.state.cAse)
+                // } catch (e) {
+                //     console.log(e)
+                // }
         } else {
             if(inputField.length !==0) {
                 if(operations.includes(lastSymbol)) {
@@ -200,19 +178,6 @@ class Calculator extends Component {
 
     componentDidMount() {
           this.props.fetchExamples()
-       // try {
-       //     const response = await axios.get('/cases.json')
-       //     const data = response.data
-       //     const cases = []
-       //     for (let example in data) {
-       //         cases.push(data[example]);
-       //     }
-       //     this.setState({
-       //         cases
-       //     })
-       // } catch (e) {
-       //     console.log(e)
-       // }
     }
 
     async componentDidUpdate() {
@@ -284,7 +249,8 @@ function mapDispatchToProps(dispatch) {
     return {
         fetchExamples: () => dispatch(fetchExamples()),
         clearExamples: () => dispatch(clearExamples()),
-        createCase: () => dispatch(createCase())
+        createCase: () => dispatch(createCase()),
+        logDrawer: () => dispatch(logDrawer())
 
     }
 }

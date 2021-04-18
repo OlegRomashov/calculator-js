@@ -1,9 +1,8 @@
 import axios from '../../axios/axios-case'
-import {FETCH_EXAMPLES_ERROR, FETCH_EXAMPLES_SUCCESS} from "./actionTypes";
+import {FETCH_EXAMPLES_ERROR, FETCH_EXAMPLES_SUCCESS, CLEAR_EXAMPLES_SUCCESS, CLEAR_EXAMPLES_ERROR, OPEN_LOG_LOGDRAWER} from "./actionTypes";
 
 export function fetchExamples() {
     return async dispatch => {
-
         try {
             const response = await axios.get('/cases.json')
             const data = response.data
@@ -12,23 +11,20 @@ export function fetchExamples() {
                 cases.push(data[example]);
             }
             dispatch(fetchExamplesSuccess(cases))
-            // this.setState({
-            //     cases
-            // })
         } catch (e) {
             dispatch(fetchExamplesError(e))
         }
     }
 }
 
-export function fetchExamplesSuccess (cases) {
+export function fetchExamplesSuccess(cases) {
     return {
         type: FETCH_EXAMPLES_SUCCESS,
         cases
     }
 }
 
-export function fetchExamplesError (e) {
+export function fetchExamplesError(e) {
     return {
         type: FETCH_EXAMPLES_ERROR,
         error: e
@@ -37,12 +33,36 @@ export function fetchExamplesError (e) {
 
 export function clearExamples() {
     return async dispatch => {
+        try {
+            await axios.delete('/cases.json')
+            dispatch(clearExamplesSuccess())
+        } catch (e) {
+            dispatch(clearExamplesError(e))
+        }
+    }
+}
 
+export function clearExamplesSuccess() {
+    return {
+        type: CLEAR_EXAMPLES_SUCCESS
+    }
+}
+
+export function clearExamplesError(e) {
+    return {
+        type: CLEAR_EXAMPLES_ERROR,
+        error: e
     }
 }
 
 export function createCase() {
     return async dispatch => {
 
+    }
+}
+
+export function logDrawer() {
+    return {
+        type: OPEN_LOG_LOGDRAWER
     }
 }
