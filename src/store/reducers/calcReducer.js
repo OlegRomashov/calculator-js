@@ -1,5 +1,5 @@
 import {FETCH_EXAMPLES_ERROR, FETCH_EXAMPLES_SUCCESS, CLEAR_EXAMPLES_SUCCESS,
-    CLEAR_EXAMPLES_ERROR, OPEN_LOGDRAWER, CONVERTER_DRAWER} from "../actions/actionTypes";
+    CLEAR_EXAMPLES_ERROR, OPEN_LOGDRAWER, CONVERTER_DRAWER, FETCH_EXAMPLE} from "../actions/actionTypes";
 
 const initialState = {
     inputField: '',
@@ -7,10 +7,7 @@ const initialState = {
     lastOperation: '',
     openLogDrawer: false,
     openConverterDrawer: false,
-    case: {
-        field: '',
-        equally: ''
-    },
+    case: {},
     cases: [],
     error: null
 }
@@ -35,11 +32,15 @@ export default function calcReducer (state = initialState, action) {
             }
         case OPEN_LOGDRAWER:
             return {
-                ...state, openLogDrawer: !action.openLogDrawer
+                ...state, openLogDrawer: !state.openLogDrawer
             }
         case CONVERTER_DRAWER:
             return {
-                ...state, openConverterDrawer: !action.openConverterDrawer, openLogDrawer: false
+                ...state, openConverterDrawer: true, openLogDrawer: false
+            }
+        case FETCH_EXAMPLE:
+            return {
+                ...state, inputField: action.payload, resultField: ''
             }
         default:
             return state

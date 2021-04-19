@@ -7,18 +7,21 @@ import Pane from '../Pane/Pane'
 import Log from '../Log/Log'
 import Converter from '../Converter/Converter'
 import {connect} from 'react-redux'
-import {fetchExamples, clearExamples, createCase, logDrawer, converterDrawer} from '../../store/actions/actionCalc'
+import {fetchExamples, clearExamples, logDrawer, converterDrawer, fetchExampleByIndex} from '../../store/actions/actionCalc'
 
 const config = { }
 const math = create(all, config)
 
 class Calculator extends Component {
+
     onExampleHandler = index => {
-        const equally = this.state.cases[index].equally.toString()
-        this.setState({
-            inputField: equally,
-            resultField: ''
-        })
+        const equally = this.props.cases[index].equally.toString()
+        this.props.fetchExampleByIndex(equally)
+
+        // this.setState({
+        //     inputField: equally,
+        //     resultField: ''
+        // })
     }
 
     onClickDrawer = id => {
@@ -31,9 +34,6 @@ class Calculator extends Component {
 
     onLogDrawerHandler = () => {
         this.props.logDrawer()
-        // this.setState({
-        //     openLogDrawer: !this.state.openLogDrawer,
-        // })
     }
 
     onConverterDrawerHandler = () => {
@@ -136,7 +136,6 @@ class Calculator extends Component {
                 case: cAse,
                 lastOperation: id
             })
-                createCase()
                 // try {
                 //     await axios.post('/cases.json', this.state.cAse)
                 // } catch (e) {
@@ -246,9 +245,9 @@ function mapDispatchToProps(dispatch) {
     return {
         fetchExamples: () => dispatch(fetchExamples()),
         clearExamples: () => dispatch(clearExamples()),
-        createCase: () => dispatch(createCase()),
         logDrawer: () => dispatch(logDrawer()),
-        converterDrawer: () => dispatch(converterDrawer())
+        converterDrawer: () => dispatch(converterDrawer()),
+        fetchExampleByIndex: (equally) => dispatch(fetchExampleByIndex(equally))
 
     }
 }
