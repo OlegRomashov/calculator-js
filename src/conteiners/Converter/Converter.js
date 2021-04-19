@@ -16,7 +16,7 @@ const Converter = props => {
 
     return(
         <React.Fragment>
-            <div className={'Converter'} >
+            <div className='Converter' >
                 <h3>КОНВЕРТАЦИЯ ЕДИНИЦ</h3>
                 <div className="grid">
                     {units.map((unit, index) => {

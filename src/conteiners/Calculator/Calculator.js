@@ -7,29 +7,33 @@ import Pane from '../Pane/Pane'
 import Log from '../Log/Log'
 import Converter from '../Converter/Converter'
 import {connect} from 'react-redux'
-import {fetchExamples, clearExamples, logDrawer, converterDrawer, fetchExampleByIndex} from '../../store/actions/actionCalc'
+import {
+    fetchExamples,
+    clearExamples,
+    logDrawer,
+    exampleToInput,
+    converterDrawer,
+    closeBackDrop
+} from '../../store/actions/actionCalc'
 
-const config = { }
+const config = {}
 const math = create(all, config)
 
 class Calculator extends Component {
 
     onExampleHandler = index => {
         const equally = this.props.cases[index].equally.toString()
-        this.props.fetchExampleByIndex(equally)
-
-        // this.setState({
-        //     inputField: equally,
-        //     resultField: ''
-        // })
+        this.props.exampleToInput(equally)
     }
 
     onClickDrawer = id => {
-        if(id === 1 ) {
+        if (id === 1) {
             this.onLogDrawerHandler()
         } else if (id === 2) {
             this.onConverterDrawerHandler()
-        } else {this.onDeleteSymbolHandler()}
+        } else {
+            this.onDeleteSymbolHandler()
+        }
     }
 
     onLogDrawerHandler = () => {
@@ -42,15 +46,15 @@ class Calculator extends Component {
 
     onDeleteSymbolHandler = () => {
         const symbols = ['.', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
-        if(this.state.inputField.length !== 0) {
+        if (this.state.inputField.length !== 0) {
             const field = [...this.state.inputField]
             field.splice(-1, 1)
-            const symbol = field[field.length-1]
+            const symbol = field[field.length - 1]
             const inputField = field.join('').toString()
             this.setState({
                 inputField
             })
-            if(symbols.includes(symbol)) {
+            if (symbols.includes(symbol)) {
                 const code = math.compile(inputField)
                 const res = code.evaluate()
                 this.setState({
@@ -70,9 +74,10 @@ class Calculator extends Component {
     }
 
     onBackDropHandler = () => {
-        this.setState({
-            openConverterDrawer: false
-        })
+        this.props.closeBackDrop()
+        // this.setState({
+        //     openConverterDrawer: false
+        // })
     }
 
     onKeyboardHandler = async id => {
@@ -81,13 +86,13 @@ class Calculator extends Component {
         const lastOperation = this.state.lastOperation
         const cAse = {}
         const inputField = [...this.state.inputField]
-        const lastSymbol = inputField[inputField.length-1]
+        const lastSymbol = inputField[inputField.length - 1]
         const revInputField = [...inputField].reverse()
         const position = revInputField.indexOf(lastOperation)
         const minArr = inputField.slice(-position)
 
-        if(symbols.includes(id)){
-                  inputField.push(id)
+        if (symbols.includes(id)) {
+            inputField.push(id)
             const input = inputField.join('').toString()
             const code = math.compile(input)
             const res = code.evaluate()
@@ -95,20 +100,20 @@ class Calculator extends Component {
                 inputField: input,
                 resultField: res
             })
-        } else if(id === 'C') {
+        } else if (id === 'C') {
             this.setState({
                 inputField: '',
                 resultField: ''
             })
-        } else if(id === '%') {
+        } else if (id === '%') {
             console.log('%')
-        } else if(id === '.') {
-            if(inputField.length === 0 || operations.includes(lastSymbol)) {
+        } else if (id === '.') {
+            if (inputField.length === 0 || operations.includes(lastSymbol)) {
                 inputField.push('0.')
-            } else if(lastSymbol === id) {
+            } else if (lastSymbol === id) {
                 return
             } else {
-                if(minArr.includes(id)) {
+                if (minArr.includes(id)) {
                     return
                 }
                 inputField.push(id)
@@ -117,33 +122,33 @@ class Calculator extends Component {
             this.setState({
                 inputField: input
             })
-        } else if(id === '+/-') {
+        } else if (id === '+/-') {
             console.log('+/-')
-        } else if(id === '()') {
+        } else if (id === '()') {
             console.log('()')
-        } else if(id === "=") {
-            if(operations.includes(lastSymbol)) {
+        } else if (id === "=") {
+            if (operations.includes(lastSymbol)) {
                 return
             }
             const input = inputField.join('').toString()
             const code = math.compile(input)
             const res = code.evaluate().toString()
-                  cAse.field = input
-                  cAse.equally = res
+            cAse.field = input
+            cAse.equally = res
             this.setState({
                 inputField: res,
                 resultField: '',
                 case: cAse,
                 lastOperation: id
             })
-                // try {
-                //     await axios.post('/cases.json', this.state.cAse)
-                // } catch (e) {
-                //     console.log(e)
-                // }
+            // try {
+            //     await axios.post('/cases.json', this.state.cAse)
+            // } catch (e) {
+            //     console.log(e)
+            // }
         } else {
-            if(inputField.length !==0) {
-                if(operations.includes(lastSymbol)) {
+            if (inputField.length !== 0) {
+                if (operations.includes(lastSymbol)) {
                     inputField.splice(-1, 1)
                 }
                 inputField.push(id)
@@ -160,8 +165,8 @@ class Calculator extends Component {
         const symbols = ['7', '8', '9', '4', '5', '6', '1', '2', '3', '0', '.']
         const value = event.target.value
         console.log(typeof value)
-        const symbol = value[value.length-1]
-        if(symbols.includes(symbol)) {
+        const symbol = value[value.length - 1]
+        if (symbols.includes(symbol)) {
             const code = math.compile(value)
             console.log(typeof code)
             const res = code.evaluate().toString()
@@ -173,7 +178,7 @@ class Calculator extends Component {
     }
 
     componentDidMount() {
-          this.props.fetchExamples()
+        this.props.fetchExamples()
     }
 
     async componentDidUpdate() {
@@ -193,6 +198,7 @@ class Calculator extends Component {
     }
 
     render() {
+
         return (
             <div className={'Calculator'}>
                 <Scoreboard
@@ -215,7 +221,7 @@ class Calculator extends Component {
                     : null
                 }
                 <Keybord
-                    onKeyboardClick = {this.onKeyboardHandler}
+                    onKeyboardClick={this.onKeyboardHandler}
                 />
                 {this.props.openConverterDrawer
                     ? <Converter
@@ -246,8 +252,9 @@ function mapDispatchToProps(dispatch) {
         fetchExamples: () => dispatch(fetchExamples()),
         clearExamples: () => dispatch(clearExamples()),
         logDrawer: () => dispatch(logDrawer()),
+        exampleToInput: (equally) => dispatch(exampleToInput(equally)),
         converterDrawer: () => dispatch(converterDrawer()),
-        fetchExampleByIndex: (equally) => dispatch(fetchExampleByIndex(equally))
+        closeBackDrop: () => dispatch(closeBackDrop()),
 
     }
 }

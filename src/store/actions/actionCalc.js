@@ -1,7 +1,7 @@
 import axios from '../../axios/axios-case'
 import {
     FETCH_EXAMPLES_ERROR, FETCH_EXAMPLES_SUCCESS, CLEAR_EXAMPLES_SUCCESS, CLEAR_EXAMPLES_ERROR,
-    OPEN_LOGDRAWER, CONVERTER_DRAWER, FETCH_EXAMPLE
+    OPEN_LOGDRAWER, CONVERTER_DRAWER, EXAMPLE_TO_INPUT, CLOSE_BACK_DROP
 } from "./actionTypes";
 
 export function fetchExamples() {
@@ -38,23 +38,10 @@ export function clearExamples() {
     return async dispatch => {
         try {
             await axios.delete('/cases.json')
-            dispatch(clearExamplesSuccess())
+            dispatch({type: CLEAR_EXAMPLES_SUCCESS})
         } catch (e) {
-            dispatch(clearExamplesError(e))
+            dispatch({type: CLEAR_EXAMPLES_ERROR, error: e})
         }
-    }
-}
-
-export function clearExamplesSuccess() {
-    return {
-        type: CLEAR_EXAMPLES_SUCCESS
-    }
-}
-
-export function clearExamplesError(e) {
-    return {
-        type: CLEAR_EXAMPLES_ERROR,
-        error: e
     }
 }
 
@@ -64,14 +51,21 @@ export function logDrawer() {
     }
 }
 
+export function exampleToInput(equally) {
+    return {
+        type: EXAMPLE_TO_INPUT,
+        payload: equally
+    }
+}
+
 export function converterDrawer() {
     return {
         type: CONVERTER_DRAWER
     }
 }
 
-export function fetchExampleByIndex(equally) {
-    return dispatch => {
-        dispatch({type: FETCH_EXAMPLE, payload: equally})
+export function closeBackDrop() {
+    return {
+        type: CLOSE_BACK_DROP
     }
 }
