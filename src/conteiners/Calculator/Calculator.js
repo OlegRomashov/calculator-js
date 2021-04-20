@@ -15,7 +15,8 @@ import {
     exampleToInput,
     converterDrawer,
     closeBackDrop,
-    entering_Numbers
+    entering_Numbers,
+    deleteSymbol
 } from '../../store/actions/actionCalc'
 
 const config = {}
@@ -34,50 +35,9 @@ class Calculator extends Component {
         } else if (id === 2) {
             this.props.converterDrawer()
         } else {
-            this.onDeleteSymbolHandler()
+            this.props.deleteSymbol()
         }
     }
-
-    // onLogDrawerHandler = () => {
-    //     this.props.logDrawer()
-    // }
-    //
-    // onConverterDrawerHandler = () => {
-    //     this.props.converterDrawer()
-    // }
-
-    onDeleteSymbolHandler = () => {
-        const symbols = ['.', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
-        if (this.state.inputField.length !== 0) {
-            const field = [...this.state.inputField]
-            field.splice(-1, 1)
-            const symbol = field[field.length - 1]
-            const inputField = field.join('').toString()
-            this.setState({
-                inputField
-            })
-            if (symbols.includes(symbol)) {
-                const code = math.compile(inputField)
-                const res = code.evaluate()
-                this.setState({
-                    resultField: res
-                })
-            } else {
-                this.setState({
-                    resultField: ''
-                })
-            }
-
-        }
-    }
-
-    onLogClearHandler = async () => {
-        this.props.clearExamples()
-    }
-
-    // onBackDropHandler = () => {
-    //     this.props.closeBackDrop()
-    // }
 
     onKeyboardHandler = async id => {
         const symbols = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
@@ -215,7 +175,7 @@ class Calculator extends Component {
                     ? <Log
                         cases={this.props.cases}
                         onClickExample={this.onExampleHandler}
-                        onClickLogClear={this.onLogClearHandler}
+                        onClickLogClear={this.props.clearExamples}
                     />
                     : null
                 }
@@ -255,6 +215,7 @@ function mapDispatchToProps(dispatch) {
         converterDrawer: () => dispatch(converterDrawer()),
         closeBackDrop: () => dispatch(closeBackDrop()),
         entering_Numbers: (input, res) => dispatch(entering_Numbers(input, res)),
+        deleteSymbol: () => dispatch(deleteSymbol()),
     }
 }
 
