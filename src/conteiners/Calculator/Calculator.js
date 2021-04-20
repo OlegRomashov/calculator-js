@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {create, all} from 'mathjs'
+import axios from '../../axios/axios-case'
 import './Calculator.css'
 import Scoreboard from '../Scoreboard/Scoreboard'
 import Keybord from '../Keyboard/Keyboard'
@@ -13,7 +14,8 @@ import {
     logDrawer,
     exampleToInput,
     converterDrawer,
-    closeBackDrop
+    closeBackDrop,
+    entering_Numbers
 } from '../../store/actions/actionCalc'
 
 const config = {}
@@ -28,21 +30,21 @@ class Calculator extends Component {
 
     onClickDrawer = id => {
         if (id === 1) {
-            this.onLogDrawerHandler()
+            this.props.logDrawer()
         } else if (id === 2) {
-            this.onConverterDrawerHandler()
+            this.props.converterDrawer()
         } else {
             this.onDeleteSymbolHandler()
         }
     }
 
-    onLogDrawerHandler = () => {
-        this.props.logDrawer()
-    }
-
-    onConverterDrawerHandler = () => {
-        this.props.converterDrawer()
-    }
+    // onLogDrawerHandler = () => {
+    //     this.props.logDrawer()
+    // }
+    //
+    // onConverterDrawerHandler = () => {
+    //     this.props.converterDrawer()
+    // }
 
     onDeleteSymbolHandler = () => {
         const symbols = ['.', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
@@ -73,33 +75,30 @@ class Calculator extends Component {
         this.props.clearExamples()
     }
 
-    onBackDropHandler = () => {
-        this.props.closeBackDrop()
-        // this.setState({
-        //     openConverterDrawer: false
-        // })
-    }
+    // onBackDropHandler = () => {
+    //     this.props.closeBackDrop()
+    // }
 
     onKeyboardHandler = async id => {
         const symbols = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
         const operations = ['/', '*', '+', '-']
-        const lastOperation = this.state.lastOperation
+        const lastOperation = this.props.lastOperation
         const cAse = {}
-        const inputField = [...this.state.inputField]
+        const inputField = [...this.props.inputField]
         const lastSymbol = inputField[inputField.length - 1]
         const revInputField = [...inputField].reverse()
         const position = revInputField.indexOf(lastOperation)
         const minArr = inputField.slice(-position)
-
         if (symbols.includes(id)) {
             inputField.push(id)
             const input = inputField.join('').toString()
             const code = math.compile(input)
             const res = code.evaluate()
-            this.setState({
-                inputField: input,
-                resultField: res
-            })
+            this.props.entering_Numbers(input, res)
+            // this.setState({
+            //     inputField: input,
+            //     resultField: res
+            // })
         } else if (id === 'C') {
             this.setState({
                 inputField: '',
@@ -141,11 +140,11 @@ class Calculator extends Component {
                 case: cAse,
                 lastOperation: id
             })
-            // try {
-            //     await axios.post('/cases.json', this.state.cAse)
-            // } catch (e) {
-            //     console.log(e)
-            // }
+            try {
+                await axios.post('/cases.json', this.state.cAse)
+            } catch (e) {
+                console.log(e)
+            }
         } else {
             if (inputField.length !== 0) {
                 if (operations.includes(lastSymbol)) {
@@ -226,7 +225,7 @@ class Calculator extends Component {
                 {this.props.openConverterDrawer
                     ? <Converter
                         onClickUnit={this.onUnitHandler}
-                        onCloseBackDrop={this.onBackDropHandler}
+                        onCloseBackDrop={this.props.closeBackDrop}
                     />
                     : null
                 }
@@ -255,7 +254,7 @@ function mapDispatchToProps(dispatch) {
         exampleToInput: (equally) => dispatch(exampleToInput(equally)),
         converterDrawer: () => dispatch(converterDrawer()),
         closeBackDrop: () => dispatch(closeBackDrop()),
-
+        entering_Numbers: (input, res) => dispatch(entering_Numbers(input, res)),
     }
 }
 

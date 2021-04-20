@@ -1,7 +1,7 @@
 import axios from '../../axios/axios-case'
 import {
     FETCH_EXAMPLES_ERROR, FETCH_EXAMPLES_SUCCESS, CLEAR_EXAMPLES_SUCCESS, CLEAR_EXAMPLES_ERROR,
-    OPEN_LOGDRAWER, CONVERTER_DRAWER, EXAMPLE_TO_INPUT, CLOSE_BACK_DROP
+    OPEN_LOGDRAWER, CONVERTER_DRAWER, EXAMPLE_TO_INPUT, CLOSE_BACK_DROP, ENTERING_NUMBERS
 } from "./actionTypes";
 
 export function fetchExamples() {
@@ -67,5 +67,11 @@ export function converterDrawer() {
 export function closeBackDrop() {
     return {
         type: CLOSE_BACK_DROP
+    }
+}
+
+export function entering_Numbers(input, res) {
+    return {
+        type: ENTERING_NUMBERS, input, res
     }
 }

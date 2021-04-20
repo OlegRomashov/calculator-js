@@ -1,7 +1,7 @@
 import {
     FETCH_EXAMPLES_ERROR, FETCH_EXAMPLES_SUCCESS, CLEAR_EXAMPLES_SUCCESS,
     CLEAR_EXAMPLES_ERROR, OPEN_LOGDRAWER, CONVERTER_DRAWER, EXAMPLE_TO_INPUT,
-    CLOSE_BACK_DROP
+    CLOSE_BACK_DROP, ENTERING_NUMBERS
 } from "../actions/actionTypes";
 
 const initialState = {
@@ -48,6 +48,10 @@ export default function calcReducer(state = initialState, action) {
         case CLOSE_BACK_DROP:
             return {
                 ...state, openConverterDrawer: false
+            }
+        case ENTERING_NUMBERS:
+            return {
+                ...state, inputField: action.input, resultField: action.res
             }
         default:
             return state
