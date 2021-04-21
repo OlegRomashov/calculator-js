@@ -4,7 +4,7 @@ import {
     FETCH_EXAMPLES_ERROR, FETCH_EXAMPLES_SUCCESS, CLEAR_EXAMPLES_SUCCESS, CLEAR_EXAMPLES_ERROR,
     OPEN_LOGDRAWER, CONVERTER_DRAWER, EXAMPLE_TO_INPUT, CLOSE_BACK_DROP, DELETE_SYMBOL_INPUT,
     DELETE_SYMBOL_RES_1, DELETE_SYMBOL_RES_2, KEY_NUMBER, KEY_C, KEY_DOT, KEY_EQUAL, SEND_EXAMPLE_ERROR,
-    KEY_OPERATIONS
+    KEY_OPERATIONS, CHANGE_INPUT
 } from "./actionTypes";
 
 const config = {}
@@ -164,6 +164,31 @@ export function keyboard(id) {
                 const input = inputField.join('').toString()
                 dispatch({type: KEY_OPERATIONS, input, id})
             }
+        }
+    }
+}
+
+export function onClickDrawer(id) {
+    return dispatch => {
+        if (id === 1) {
+            dispatch(logDrawer())
+        } else if (id === 2) {
+            dispatch(converterDrawer())
+        } else {
+            dispatch(deleteSymbol())
+        }
+    }
+}
+
+export function changeInput(event) {
+    return dispatch => {
+        const symbols = ['7', '8', '9', '4', '5', '6', '1', '2', '3', '0', '.']
+        const value = event.target.value
+        const symbol = value[value.length - 1]
+        if (symbols.includes(symbol)) {
+            const code = math.compile(value)
+            const res = code.evaluate().toString()
+            dispatch({type: CHANGE_INPUT, value, res})
         }
     }
 }

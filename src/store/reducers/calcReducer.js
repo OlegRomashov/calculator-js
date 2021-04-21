@@ -3,7 +3,7 @@ import {
     CLEAR_EXAMPLES_ERROR, OPEN_LOGDRAWER, CONVERTER_DRAWER, EXAMPLE_TO_INPUT,
     CLOSE_BACK_DROP, DELETE_SYMBOL_INPUT, DELETE_SYMBOL_RES_1,
     DELETE_SYMBOL_RES_2, KEY_NUMBER, KEY_C, KEY_DOT, KEY_EQUAL, SEND_EXAMPLE_ERROR,
-    KEY_OPERATIONS
+    KEY_OPERATIONS, CHANGE_INPUT
 } from "../actions/actionTypes";
 
 const initialState = {
@@ -86,6 +86,10 @@ export default function calcReducer(state = initialState, action) {
         case KEY_OPERATIONS:
             return {
                 ...state, inputField: action.input, lastOperation: action.id
+            }
+        case CHANGE_INPUT:
+            return {
+                ...state, inputField: action.value, resultField: action.res
             }
         default:
             return state
