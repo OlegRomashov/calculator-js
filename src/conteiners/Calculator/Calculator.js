@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import {create, all} from 'mathjs'
-import axios from '../../axios/axios-case'
 import './Calculator.css'
 import Scoreboard from '../Scoreboard/Scoreboard'
 import Keybord from '../Keyboard/Keyboard'
@@ -15,8 +14,8 @@ import {
     exampleToInput,
     converterDrawer,
     closeBackDrop,
-    entering_Numbers,
-    deleteSymbol
+    deleteSymbol,
+    keyboard
 } from '../../store/actions/actionCalc'
 
 const config = {}
@@ -36,87 +35,6 @@ class Calculator extends Component {
             this.props.converterDrawer()
         } else {
             this.props.deleteSymbol()
-        }
-    }
-
-    onKeyboardHandler = async id => {
-        const symbols = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
-        const operations = ['/', '*', '+', '-']
-        const lastOperation = this.props.lastOperation
-        const cAse = {}
-        const inputField = [...this.props.inputField]
-        const lastSymbol = inputField[inputField.length - 1]
-        const revInputField = [...inputField].reverse()
-        const position = revInputField.indexOf(lastOperation)
-        const minArr = inputField.slice(-position)
-        if (symbols.includes(id)) {
-            inputField.push(id)
-            const input = inputField.join('').toString()
-            const code = math.compile(input)
-            const res = code.evaluate()
-            this.props.entering_Numbers(input, res)
-            // this.setState({
-            //     inputField: input,
-            //     resultField: res
-            // })
-        } else if (id === 'C') {
-            this.setState({
-                inputField: '',
-                resultField: ''
-            })
-        } else if (id === '%') {
-            console.log('%')
-        } else if (id === '.') {
-            if (inputField.length === 0 || operations.includes(lastSymbol)) {
-                inputField.push('0.')
-            } else if (lastSymbol === id) {
-                return
-            } else {
-                if (minArr.includes(id)) {
-                    return
-                }
-                inputField.push(id)
-            }
-            const input = inputField.join('').toString()
-            this.setState({
-                inputField: input
-            })
-        } else if (id === '+/-') {
-            console.log('+/-')
-        } else if (id === '()') {
-            console.log('()')
-        } else if (id === "=") {
-            if (operations.includes(lastSymbol)) {
-                return
-            }
-            const input = inputField.join('').toString()
-            const code = math.compile(input)
-            const res = code.evaluate().toString()
-            cAse.field = input
-            cAse.equally = res
-            this.setState({
-                inputField: res,
-                resultField: '',
-                case: cAse,
-                lastOperation: id
-            })
-            try {
-                await axios.post('/cases.json', this.state.cAse)
-            } catch (e) {
-                console.log(e)
-            }
-        } else {
-            if (inputField.length !== 0) {
-                if (operations.includes(lastSymbol)) {
-                    inputField.splice(-1, 1)
-                }
-                inputField.push(id)
-                const input = inputField.join('').toString()
-                this.setState({
-                    inputField: input,
-                    lastOperation: id,
-                })
-            }
         }
     }
 
@@ -140,7 +58,8 @@ class Calculator extends Component {
         this.props.fetchExamples()
     }
 
-    async componentDidUpdate() {
+    componentDidUpdate() {
+
         // try {
         //     const response = await axios.get('/cases.json')
         //     const data = response.data
@@ -157,7 +76,6 @@ class Calculator extends Component {
     }
 
     render() {
-
         return (
             <div className={'Calculator'}>
                 <Scoreboard
@@ -180,7 +98,7 @@ class Calculator extends Component {
                     : null
                 }
                 <Keybord
-                    onKeyboardClick={this.onKeyboardHandler}
+                    onKeyboardClick={this.props.keyboard}
                 />
                 {this.props.openConverterDrawer
                     ? <Converter
@@ -214,8 +132,8 @@ function mapDispatchToProps(dispatch) {
         exampleToInput: (equally) => dispatch(exampleToInput(equally)),
         converterDrawer: () => dispatch(converterDrawer()),
         closeBackDrop: () => dispatch(closeBackDrop()),
-        entering_Numbers: (input, res) => dispatch(entering_Numbers(input, res)),
         deleteSymbol: () => dispatch(deleteSymbol()),
+        keyboard: (id) => dispatch(keyboard(id)),
     }
 }
 
