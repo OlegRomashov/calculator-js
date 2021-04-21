@@ -23,11 +23,6 @@ const math = create(all, config)
 
 class Calculator extends Component {
 
-    onExampleHandler = index => {
-        const equally = this.props.cases[index].equally.toString()
-        this.props.exampleToInput(equally)
-    }
-
     onClickDrawer = id => {
         if (id === 1) {
             this.props.logDrawer()
@@ -57,24 +52,7 @@ class Calculator extends Component {
     componentDidMount() {
         this.props.fetchExamples()
     }
-
-    componentDidUpdate() {
-
-        // try {
-        //     const response = await axios.get('/cases.json')
-        //     const data = response.data
-        //     const cases = []
-        //     for (let example in data) {
-        //         cases.push(data[example]);
-        //     }
-        //     this.setState({
-        //         cases
-        //     })
-        // } catch (e) {
-        //     console.log(e)
-        // }
-    }
-
+    
     render() {
         return (
             <div className={'Calculator'}>
@@ -92,7 +70,7 @@ class Calculator extends Component {
                 {this.props.openLogDrawer
                     ? <Log
                         cases={this.props.cases}
-                        onClickExample={this.onExampleHandler}
+                        onClickExample={this.props.exampleToInput}
                         onClickLogClear={this.props.clearExamples}
                     />
                     : null
@@ -129,10 +107,10 @@ function mapDispatchToProps(dispatch) {
         fetchExamples: () => dispatch(fetchExamples()),
         clearExamples: () => dispatch(clearExamples()),
         logDrawer: () => dispatch(logDrawer()),
-        exampleToInput: (equally) => dispatch(exampleToInput(equally)),
         converterDrawer: () => dispatch(converterDrawer()),
-        closeBackDrop: () => dispatch(closeBackDrop()),
         deleteSymbol: () => dispatch(deleteSymbol()),
+        exampleToInput: (index) => dispatch(exampleToInput(index)),
+        closeBackDrop: () => dispatch(closeBackDrop()),
         keyboard: (id) => dispatch(keyboard(id)),
     }
 }

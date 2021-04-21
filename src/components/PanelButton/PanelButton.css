@@ -9,10 +9,6 @@
     cursor: pointer;
 }
 
-.PanelButton.fa-backspace {
-    margin-left: 195px;
-}
-
 .PanelButton:disabled {
     color: #ccc;
     opacity: .5;

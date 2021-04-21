@@ -57,10 +57,12 @@ export function logDrawer() {
     }
 }
 
-export function exampleToInput(equally) {
-    return {
-        type: EXAMPLE_TO_INPUT,
-        payload: equally
+export function exampleToInput(index) {
+    return (dispatch, getState) => {
+        const state = getState().calcReducer
+        const equally = state.cases[index].equally.toString()
+        dispatch({type: EXAMPLE_TO_INPUT, payload: equally
+        })
     }
 }
 
@@ -116,16 +118,8 @@ export function keyboard(id) {
             const code = math.compile(input)
             const res = code.evaluate()
             dispatch({type: KEY_NUMBER, input, res})
-            // this.setState({
-            //     inputField: input,
-            //     resultField: res
-            // })
         } else if (id === 'C') {
             dispatch({type: KEY_C})
-            // this.setState({
-            //     inputField: '',
-            //     resultField: ''
-            // })
         } else if (id === '.') {
             if (inputField.length === 0 || operations.includes(lastSymbol)) {
                 inputField.push('0.')
@@ -139,9 +133,6 @@ export function keyboard(id) {
             }
             const input = inputField.join('').toString()
             dispatch({type: KEY_DOT, input})
-            // this.setState({
-            //     inputField: input
-            // })
         } else if (id === '%') {
             console.log('%')
         } else if (id === '+/-') {
@@ -158,14 +149,6 @@ export function keyboard(id) {
             example.field = input
             example.equally = res
             cases.push(example)
-
-            // this.setState({
-            //     inputField: res,
-            //     resultField: '',
-            //     cases: cases
-            //     case: example,
-            //     lastOperation: id
-            // })
             try {
                 await axios.post('/cases.json', example)
                 dispatch({type: KEY_EQUAL, res, example, cases})
@@ -180,10 +163,6 @@ export function keyboard(id) {
                 inputField.push(id)
                 const input = inputField.join('').toString()
                 dispatch({type: KEY_OPERATIONS, input, id})
-                // this.setState({
-                //     inputField: input,
-                //     lastOperation: id,
-                // })
             }
         }
     }

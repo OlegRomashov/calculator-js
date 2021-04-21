@@ -1,9 +1,11 @@
 .Pane {
+    display: flex;
+    justify-content: space-between;
     width: 360px;
     height: 40px;
     background-color: #091E39;
 }
 
 .Pane button:last-child {
-    margin-left: 185px;
+    margin-left: 170px;
 }
